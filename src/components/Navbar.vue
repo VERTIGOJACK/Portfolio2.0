@@ -19,11 +19,18 @@
 <template>
   <nav id="top-nav">
     <div class="navbar-content">
-      <a href="/" class="logo-text"> VERTIGODIGITAL. </a>
-      <Hamburger @click="ToggleMenu"></Hamburger>
+      <router-link to="/" class="logo-text" @click="isMenuOpen = false">
+        VERTIGODIGITAL.
+      </router-link>
+      <Hamburger @click="ToggleMenu" :active="isMenuOpen"></Hamburger>
     </div>
     <div class="links" :class="isMenuOpen ? 'show' : ''">
-      <a v-for="option in menuOptions" :href="option.link">{{ option.text }}</a>
+      <router-link
+        @click="ToggleMenu()"
+        v-for="option in menuOptions"
+        :to="option.link"
+        >{{ option.text }}</router-link
+      >
     </div>
   </nav>
 </template>

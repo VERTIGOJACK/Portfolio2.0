@@ -1,21 +1,23 @@
 <script setup>
-  import { ref } from "vue";
+  import { ref, onMounted } from "vue";
 
-  //class toggler
-  const active = ref(false);
-  const ToggleActive = () => {
-    active.value = !active.value;
-  };
+  const props = defineProps(["active"]);
 </script>
 
 <template>
-  <section class="hamburger" @click="ToggleActive()">
+  <section class="hamburger" v-if="props.active != null">
     <div
       id="line1"
-      :class="active ? 'active' : ''"
+      :class="props.active ? 'active' : ''"
       style="--displace: -1"></div>
-    <div id="line2" :class="active ? 'active' : ''" style="--displace: 0"></div>
-    <div id="line3" :class="active ? 'active' : ''" style="--displace: 1"></div>
+    <div
+      id="line2"
+      :class="props.active ? 'active' : ''"
+      style="--displace: 0"></div>
+    <div
+      id="line3"
+      :class="props.active ? 'active' : ''"
+      style="--displace: 1"></div>
   </section>
 </template>
 
