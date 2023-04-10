@@ -40,7 +40,7 @@
     --background: var(--color-palette-3);
     --altbackground: var(--color-palette-4);
     --althover: var(--color-palette-5);
-    font-family: var(--font5);
+ 
     font-size: x-large;
     filter: var(--common-shadow);
     z-index: 100;

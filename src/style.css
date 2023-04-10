@@ -4,7 +4,7 @@
   --font2: "Liu Jian Mao Cao", cursive;
   --font3: "Luckiest Guy", cursive;
   --font4: "Poppins", sans-serif;
-  --font5: "Abel", sans-serif;
+  --font5:  sans-serif;
 
   --color-palette-1: #61892f;
   --color-palette-2: #86c232;
@@ -29,6 +29,10 @@
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   -webkit-text-size-adjust: 100%;
+}
+
+p {
+  font-family: var(--font5);
 }
 
 a {
