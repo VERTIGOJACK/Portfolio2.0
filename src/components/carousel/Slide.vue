@@ -35,7 +35,7 @@
     transition: all 0.5s ease-in-out;
     filter: var(--common-shadow);
   }
-
+/*  */
   .slide-text {
     display: flex;
     flex-direction: column;
