@@ -37,10 +37,21 @@
         version: "1.1",
       },
       {
-        sectionTitle: "Harvard Reference Formatter",
+        sectionTitle: "Harvard Reference",
         sectionText:
-          "A web based tool for generating correct references according to the harvard reference system. It presents users with a form to gather the relevant information, and formats the references accordingly.",
-        carouselList: "",
+          "Harvard Reference is a (swedish) web-based tool that uses a form to gather necessary information and generates references based on the Harvard referencing system.",
+        carouselList: [
+          {
+            url: "https://drive.google.com/uc?id=1oX34AlbO8r-yD11PTmyPclBrWr3qP9am",
+            title: "Save time",
+            text: "Efficient essay writing means no more switching back-and-forth between referencing guides. Automate your references with ease!",
+          },
+          {
+            url: "https://drive.google.com/uc?id=15lMlvDPsXWVWvylO4XuC_b_afAYIqznh",
+            title: "Do it now!",
+            text: "Eliminate last-minute referencing stress. Format your references immediately and never worry again.",
+          },
+        ],
         link: {
           text: "Go to site",
           url: "https://referenceformatter.pages.dev/",
@@ -60,7 +71,10 @@
       </div>
     </div> -->
     <div class="items-container">
-      <div v-for="item in softwareContent.items">
+      <div
+        v-for="(item, index) in softwareContent.items"
+        :class="index + 1 == softwareContent.items.length ? '' : 'item'"
+        :key="index">
         <h1>{{ item.sectionTitle }}</h1>
         <p>{{ item.sectionText }}</p>
         <div v-if="item.carouselList != ''">
@@ -101,6 +115,14 @@
 
   .items-container {
     width: 80%;
+  }
+
+  .item {
+    border-style: solid;
+    border-width: 0px 0px 8px 0px;
+    border-color: var(--color-palette-3);
+    filter: var(--common-shadow);
+    padding-bottom: 32px;
   }
   .info {
     display: flex;
