@@ -21,12 +21,12 @@
           },
           {
             url: "https://drive.google.com/uc?id=1Dj06EOSN17DU34d5w6oPmqINRP0-5X5W",
-            title: "High five!",
+            title: "",
             text: "Enjoy a fun and engaging workout experience that will keep you coming back for more. With GymCat by your side, you'll never have to exercise alone again!",
           },
           {
             url: "https://drive.google.com/uc?id=1YiZewW5c145CDnPbfl9z92WDc-taWLle",
-            title: "Stay consistent",
+            title: "",
             text: "View detailed statistics on your workouts, including the total time spent exercising, the number of calories burned, and more.",
           },
         ],
@@ -43,12 +43,12 @@
         carouselList: [
           {
             url: "https://drive.google.com/uc?id=1oX34AlbO8r-yD11PTmyPclBrWr3qP9am",
-            title: "Save time",
+            title: "Save time!",
             text: "Efficient essay writing means no more switching back-and-forth between referencing guides. Automate your references with ease!",
           },
           {
             url: "https://drive.google.com/uc?id=15lMlvDPsXWVWvylO4XuC_b_afAYIqznh",
-            title: "Do it now!",
+            title: "",
             text: "Eliminate last-minute referencing stress. Format your references immediately and never worry again.",
           },
         ],

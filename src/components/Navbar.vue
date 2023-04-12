@@ -4,6 +4,7 @@
   const isMenuOpen = ref(false);
 
   const menuOptions = [
+    { text: "Home", link: "/" },
     { text: "Software", link: "/software" },
     { text: "Graphics", link: "/graphics" },
     { text: "Music", link: "/music" },
@@ -40,7 +41,7 @@
     --background: var(--color-palette-3);
     --altbackground: var(--color-palette-4);
     --althover: var(--color-palette-5);
- 
+
     font-size: x-large;
     filter: var(--common-shadow);
     z-index: 100;
