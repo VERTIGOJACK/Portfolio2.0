@@ -14,14 +14,14 @@
 
 <style scoped>
   .gallery {
-    padding: 10px;
+    padding: 5vw;
     display: flex;
     flex-wrap: wrap;
-    gap: 10px;
+    gap: 5vw;
   }
 
   img {
-    height: 235px;
+    height: 42vw;
     aspect-ratio: 1/1;
 
     object-fit: cover;
