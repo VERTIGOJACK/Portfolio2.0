@@ -68,6 +68,7 @@
     border-style: solid;
     border-color: var(--color-palette-6);
     color: var(--color-palette-6);
+    overflow: hidden;
   }
 
   .close-button:hover {
