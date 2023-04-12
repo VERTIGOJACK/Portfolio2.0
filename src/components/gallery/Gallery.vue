@@ -14,14 +14,16 @@
 
 <style scoped>
   .gallery {
-    padding: 5vw;
-    display: flex;
+    padding: 10px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
     flex-wrap: wrap;
-    gap: 5vw;
+    gap: 10px;
+    justify-items: center;
   }
 
   img {
-    height: 42vw;
+    width: 46vw;
     aspect-ratio: 1/1;
 
     object-fit: cover;

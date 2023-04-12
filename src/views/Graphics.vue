@@ -3,6 +3,8 @@
   import Carousel from "../components/carousel/Carousel.vue";
   import Gallery from "../components/gallery/Gallery.vue";
   import Modal from "../components/modal/Modal.vue";
+  //import data from JSON
+  import * as galleryData from "../data/galleryData.json";
   const modalActive = ref(false);
   const currentImg = ref("");
 
@@ -10,37 +12,6 @@
     console.log(url);
     modalActive.value = true;
     currentImg.value = url;
-  };
-
-  const imageList = {
-    highlights: [
-      {
-        url: "https://drive.google.com/uc?id=1aQWBd54AMBfVZsWkLSAtokBpo_-h440s",
-        title: "",
-        text: "",
-      },
-      {
-        url: "https://drive.google.com/uc?id=1Dj06EOSN17DU34d5w6oPmqINRP0-5X5W",
-        title: "",
-        text: "",
-      },
-      {
-        url: "https://drive.google.com/uc?id=1YiZewW5c145CDnPbfl9z92WDc-taWLle",
-        title: "",
-        text: "",
-      },
-    ],
-    gallery: [
-      {
-        url: "https://drive.google.com/uc?id=1aQWBd54AMBfVZsWkLSAtokBpo_-h440s",
-      },
-      {
-        url: "https://drive.google.com/uc?id=1Dj06EOSN17DU34d5w6oPmqINRP0-5X5W",
-      },
-      {
-        url: "https://drive.google.com/uc?id=1YiZewW5c145CDnPbfl9z92WDc-taWLle",
-      },
-    ],
   };
 </script>
 
@@ -54,10 +25,10 @@
     /></Modal>
     <!-- three js thing here instead of hero probably -->
     <div class="hero">
-      <Carousel class="carousel" :list="imageList.highlights"></Carousel>
+      <Carousel class="carousel" :list="galleryData.highlights"></Carousel>
     </div>
     <div class="gallery">
-      <Gallery :images="imageList.gallery" @image-clicked="showModal">
+      <Gallery :images="galleryData.gallery" @image-clicked="showModal">
       </Gallery>
     </div>
   </div>
