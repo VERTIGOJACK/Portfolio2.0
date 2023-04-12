@@ -4,7 +4,7 @@
   --font2: "Liu Jian Mao Cao", cursive;
   --font3: "Luckiest Guy", cursive;
   --font4: "Poppins", sans-serif;
-  --font5:  sans-serif;
+  --font5: sans-serif;
 
   --color-palette-1: #61892f;
   --color-palette-2: #86c232;
@@ -70,6 +70,21 @@ button:hover {
 button:focus,
 button:focus-visible {
   outline: 4px auto -webkit-focus-ring-color;
+}
+
+.call-to-action {
+  background-color: var(--color-palette-1);
+  filter: var(--common-shadow);
+  border-radius: 3px;
+  padding: 4px;
+  transition: all 0.2s ease-in-out;
+}
+
+.call-to-action:hover {
+  background-color: var(--color-palette-2);
+  color: var(--color-palette-6);
+  filter: var(--common-shadow);
+  transform: scale(1.05);
 }
 
 .card {
