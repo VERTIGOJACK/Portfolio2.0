@@ -1,15 +1,16 @@
 <script setup>
   import { ref, onMounted } from "vue";
-  const props = defineProps(["item", "currentSlide"]);
+  const props = defineProps(["item", "currentSlide", "dim"]);
   const content = ref(null);
   onMounted(() => {
     content.value = props.item;
+    
   });
 </script>
 
 <template>
   <div v-if="content != null" class="slide">
-    <img :src="content.url" alt="" />
+    <img :src="content.url" alt="" :class="dim ? 'dim' : ''" />
     <div class="slide-text">
       <div class="up">
         <h1 v-if="content.title">{{ content.title }}</h1>
@@ -35,7 +36,7 @@
     transition: all 0.5s ease-in-out;
     filter: var(--common-shadow);
   }
-/*  */
+  /*  */
   .slide-text {
     display: flex;
     flex-direction: column;
@@ -68,6 +69,9 @@
     width: 100%;
     height: 100%;
     object-fit: cover;
+  }
+
+  .dim {
     filter: blur(1px) brightness(0.3);
   }
 </style>

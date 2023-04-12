@@ -1,44 +1,84 @@
 <script setup>
-  const sections = {
-    title: "Hi, i'm Sebastian",
-    sections: [
+  import { ref } from "vue";
+  import Carousel from "../components/carousel/Carousel.vue";
+  import Gallery from "../components/gallery/Gallery.vue";
+  import Modal from "../components/modal/Modal.vue";
+  const modalActive = ref(false);
+  const currentImg = ref("");
+
+  const showModal = (url) => {
+    console.log(url);
+    modalActive.value = true;
+    currentImg.value = url;
+  };
+
+  const imageList = {
+    highlights: [
       {
-        sectionTitle: "",
-        sectionText:
-          "I´m studying bachelor's degree level systems development and informatics at Univeristy West. Degrees aside, i have over ten years of experience in digital audio, and several years of experience in both 2D and 3D graphics.My aim is to be your operations future fullstack developer, sound engineer, graphic artist, or all of the above.",
+        url: "https://drive.google.com/uc?id=1aQWBd54AMBfVZsWkLSAtokBpo_-h440s",
+        title: "",
+        text: "",
       },
       {
-        sectionTitle: "What i do:",
-        sectionText:
-          "I provide excellent taste, peerless work ethic, and a problem solving mindset. Neither bound by specific tools nor software, i will work within the limitations given to produce above and beyond results.",
+        url: "https://drive.google.com/uc?id=1Dj06EOSN17DU34d5w6oPmqINRP0-5X5W",
+        title: "",
+        text: "",
+      },
+      {
+        url: "https://drive.google.com/uc?id=1YiZewW5c145CDnPbfl9z92WDc-taWLle",
+        title: "",
+        text: "",
+      },
+    ],
+    gallery: [
+      {
+        url: "https://drive.google.com/uc?id=1aQWBd54AMBfVZsWkLSAtokBpo_-h440s",
+      },
+      {
+        url: "https://drive.google.com/uc?id=1Dj06EOSN17DU34d5w6oPmqINRP0-5X5W",
+      },
+      {
+        url: "https://drive.google.com/uc?id=1YiZewW5c145CDnPbfl9z92WDc-taWLle",
       },
     ],
   };
 </script>
 
 <template>
-  <div id="home">
+  <div id="graphics">
+    <Modal
+      class="modal"
+      :modal-active="modalActive"
+      @close-modal="modalActive = false"
+      ><img :src="currentImg"
+    /></Modal>
     <!-- three js thing here instead of hero probably -->
-    <div class="hero"></div>
-    <div class="text-container">
-      <h1>{{ sections.title }}</h1>
-      <div v-for="section in sections.sections">
-        <h2 v-if="section.sectionTitle != ''">{{ section.sectionTitle }}</h2>
-        <p>{{ section.sectionText }}</p>
-      </div>
+    <div class="hero">
+      <Carousel class="carousel" :list="imageList.highlights"></Carousel>
+    </div>
+    <div class="gallery">
+      <Gallery :images="imageList.gallery" @image-clicked="showModal">
+      </Gallery>
     </div>
   </div>
 </template>
 
 <style scoped>
-  #home {
+  #graphics {
     display: flex;
     align-items: center;
     flex-direction: column;
   }
 
+  .modal img {
+    object-fit: cover;
+    width: 100%;
+    height: 100%;
+  }
   .hero {
-    height: 400px;
+    height: fit-content;
+    width: calc(100% - 20px);
+    padding-top: 10px;
   }
   .text-container {
     width: 80%;

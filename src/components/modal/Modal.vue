@@ -14,6 +14,7 @@
               @click="$emit('close-modal')">
               X
             </button>
+
             <slot></slot>
           </div>
         </Transition>
@@ -24,6 +25,7 @@
 
 <style scoped>
   .base {
+    z-index: 1000;
     position: relative;
     height: 100%;
     width: 100%;
@@ -35,7 +37,7 @@
     left: 0;
     height: 100%;
     width: 100%;
-    background-color: rgba(0, 0, 0, 0.2);
+    background-color: rgba(0, 0, 0, 0.8);
   }
   .modal-inner {
     margin: auto;
@@ -48,6 +50,7 @@
     max-height: 70%;
     height: 80%;
   }
+
   .close-button {
     position: absolute;
     top: 10px;

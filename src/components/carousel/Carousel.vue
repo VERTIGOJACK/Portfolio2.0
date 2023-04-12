@@ -37,7 +37,8 @@
         v-for="(item, slideIndex) in carouselList"
         :class="currentSlide === slideIndex + 1 ? 'show' : 'hide'"
         :item="item"
-        :key="slideIndex">
+        :key="slideIndex"
+        :dim="item.title != '' || item.text != ''">
       </Slide>
       <div class="toggle-container">
         <div class="toggle-page left">
