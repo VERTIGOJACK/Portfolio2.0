@@ -9,7 +9,7 @@
       container.classList.add("loaded");
       container.removeAttribute("style");
       settingsResize();
-    }, 100);
+    }, 200);
 
     //get container
     const container = document.querySelector(".three");

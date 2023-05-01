@@ -1,5 +1,6 @@
 <script setup>
   import Herothree from "../components/herothree/Herothree.vue";
+  import { ref, onMounted } from "vue";
   const sections = {
     title: "Hi, i'm Sebastian",
     sections: [
@@ -19,6 +20,14 @@
       },
     ],
   };
+
+  const textWidth = ref(0);
+  const textHeight = ref(0);
+  onMounted(() => {
+    const slanted = document.querySelector(".slanted");
+    textWidth.value = slanted.clientWidth + "px";
+    textHeight.value = slanted.clientHeight + "px";
+  });
 </script>
 
 <template>
@@ -28,7 +37,14 @@
       <Herothree></Herothree>
     </div>
     <div class="text-container">
-      <h1>{{ sections.title }}</h1>
+      <div class="slanted-container">
+        <div class="position-wrapper">
+          <h1 class="slanted">
+            {{ sections.title }}
+            <div class="slanted-background"></div>
+          </h1>
+        </div>
+      </div>
       <div v-for="section in sections.sections">
         <h2 v-if="section.sectionTitle != ''">{{ section.sectionTitle }}</h2>
         <p v-html="section.sectionText"></p>
@@ -42,10 +58,42 @@
     display: flex;
     align-items: center;
     flex-direction: column;
+    overflow: hidden;
+  }
+
+  .slanted-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+  }
+
+  .position-wrapper {
+    position: relative;
+    width: v-bind(textWidth);
+    height: v-bind(textHeight);
+  }
+  .slanted {
+    position: absolute;
+    bottom: 10%;
+    white-space: nowrap;
+    transform: rotate(-10deg);
+  }
+  .slanted-background {
+    position: absolute;
+    left: -5000px;
+    top: -50%;
+    border-style: dashed;
+    border-width: 20px;
+    border-bottom: 0;
+    border-color: var(--color-palette-1);
+    width: 10000px;
+    height: 100px;
+    z-index: -8;
   }
 
   .hero {
-    height: 400px;
+    height: 500px;
   }
   .text-container {
     width: 80%;
