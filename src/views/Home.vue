@@ -41,7 +41,7 @@
         <div class="position-wrapper">
           <h1 class="slanted">
             {{ sections.title }}
-            <div class="slanted-background"></div>
+            <!-- <div class="slanted-background"></div> -->
           </h1>
         </div>
       </div>
@@ -76,13 +76,13 @@
   .slanted {
     position: absolute;
     bottom: 10%;
-    white-space: nowrap;
+
     transform: rotate(-10deg);
   }
   .slanted-background {
     position: absolute;
     left: -5000px;
-    top: -50%;
+    top: 100%;
     border-style: dashed;
     border-width: 20px;
     border-bottom: 0;
