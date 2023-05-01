@@ -25,7 +25,7 @@
   img {
     width: 46vw;
     aspect-ratio: 1/1;
-
+    cursor: pointer;
     object-fit: cover;
   }
 </style>

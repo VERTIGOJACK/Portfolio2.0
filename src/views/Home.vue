@@ -1,4 +1,5 @@
 <script setup>
+  import Herothree from "../components/herothree/Herothree.vue";
   const sections = {
     title: "Hi, i'm Sebastian",
     sections: [
@@ -23,7 +24,9 @@
 <template>
   <div id="home">
     <!-- three js thing here instead of hero probably -->
-    <div class="hero"></div>
+    <div class="hero">
+      <Herothree></Herothree>
+    </div>
     <div class="text-container">
       <h1>{{ sections.title }}</h1>
       <div v-for="section in sections.sections">

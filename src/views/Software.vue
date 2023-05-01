@@ -37,9 +37,32 @@
         version: "1.1",
       },
       {
+        sectionTitle: "CSS palette",
+        sectionText: `This Vue-based webapp allows you to easily select colors for your website's CSS root variables.
+          This helps to save you time and ensures consistency throughout your website. 
+          Give it a try to simplify your design workflow.`,
+        carouselList: [
+          {
+            url: "https://drive.google.com/uc?id=1ZK1nXRBR1UbRmkcOXbLjNGBY6rLY_NiU",
+            title: "Variations",
+            text: "Expand your selected colors with dark and light variations.",
+          },
+          {
+            url: "https://drive.google.com/uc?id=1YuHHQdlMGgdFKKABYo5d7DWshxW5QcIt",
+            title: "Color-picker",
+            text: "Select colors from an image of your choosing.",
+          },
+        ],
+        link: {
+          text: "Go to site",
+          url: "https://vertigojack.github.io/CSS-Palette/",
+        },
+        version: "1.0",
+      },
+      {
         sectionTitle: "Harvard Reference",
         sectionText:
-          "Harvard Reference is a (swedish) web-based tool that uses a form to gather necessary information and generates references based on the Harvard referencing system.",
+          "Harvard Reference is a (swedish) webapp that uses a form to gather necessary information and generates references based on the Harvard referencing system.",
         carouselList: [
           {
             url: "https://drive.google.com/uc?id=1oX34AlbO8r-yD11PTmyPclBrWr3qP9am",
@@ -81,7 +104,7 @@
           <Carousel :list="item.carouselList"></Carousel>
         </div>
         <div class="info">
-          <a class="call-to-action" :href="item.link.url">{{
+          <a class="call-to-action" :href="item.link.url" target="_blank">{{
             item.link.text
           }}</a>
           <p>Version: {{ item.version }}</p>
