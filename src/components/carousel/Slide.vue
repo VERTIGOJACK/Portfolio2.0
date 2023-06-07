@@ -4,7 +4,6 @@
   const content = ref(null);
   onMounted(() => {
     content.value = props.item;
-    
   });
 </script>
 
@@ -16,7 +15,7 @@
         <h1 v-if="content.title">{{ content.title }}</h1>
       </div>
       <div class="down">
-        <p v-if="content.text">{{ content.text }}</p>
+        <div v-if="content.text">{{ content.text }}</div>
       </div>
     </div>
   </div>

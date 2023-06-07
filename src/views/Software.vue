@@ -1,88 +1,5 @@
 <script setup>
-  import Carousel from "../components/carousel/Carousel.vue";
-  const softwareContent = {
-    title: "Software and Web",
-    description: `Although programming and coding is a relatively new pursuit for me,
-      i see the possibilities it offers for building in the digital realm. Developing websites,
-      applications, and other digital projects has become a true passion of mine. <br><br>
-      In fact, this very website is just one of many projects I've had the pleasure of working on.
-      Whether working independently or as part of a team,
-      i bring passion and dedication to quality for every project.`,
-    items: [
-      {
-        sectionTitle: "Gymcat Timer",
-        sectionText:
-          "Gymcat Timer is an Android workout timer with session logging. The application was developed as a student project for the course 'Android Programming with Java'.",
-        carouselList: [
-          {
-            url: "https://drive.google.com/uc?id=1aQWBd54AMBfVZsWkLSAtokBpo_-h440s",
-            title: "Stay motivated",
-            text: "GymCat is your new virtual gym buddy! This cute and friendly cat will help you stay motivated and on track during your workouts.",
-          },
-          {
-            url: "https://drive.google.com/uc?id=1Dj06EOSN17DU34d5w6oPmqINRP0-5X5W",
-            title: "",
-            text: "Enjoy a fun and engaging workout experience that will keep you coming back for more. With GymCat by your side, you'll never have to exercise alone again!",
-          },
-          {
-            url: "https://drive.google.com/uc?id=1YiZewW5c145CDnPbfl9z92WDc-taWLle",
-            title: "",
-            text: "View detailed statistics on your workouts, including the total time spent exercising, the number of calories burned, and more.",
-          },
-        ],
-        link: {
-          text: "Download APK",
-          url: "https://drive.google.com/uc?export=download&id=1K6Oy1y3iBE9Eu0bmhb5_VlhYcrgByUAb",
-        },
-        version: "1.1",
-      },
-      {
-        sectionTitle: "CSS palette",
-        sectionText: `This Vue-based webapp allows you to easily select colors for your website's CSS root variables.
-          This helps to save you time and ensures consistency throughout your website. 
-          Give it a try to simplify your design workflow.`,
-        carouselList: [
-          {
-            url: "https://drive.google.com/uc?id=1ZK1nXRBR1UbRmkcOXbLjNGBY6rLY_NiU",
-            title: "Variations",
-            text: "Expand your selected colors with dark and light variations.",
-          },
-          {
-            url: "https://drive.google.com/uc?id=1YuHHQdlMGgdFKKABYo5d7DWshxW5QcIt",
-            title: "Color-picker",
-            text: "Select colors from an image of your choosing.",
-          },
-        ],
-        link: {
-          text: "Go to site",
-          url: "https://vertigojack.github.io/CSS-Palette/",
-        },
-        version: "1.0",
-      },
-      {
-        sectionTitle: "Harvard Reference",
-        sectionText:
-          "Harvard Reference is a (swedish) webapp that uses a form to gather necessary information and generates references based on the Harvard referencing system.",
-        carouselList: [
-          {
-            url: "https://drive.google.com/uc?id=1oX34AlbO8r-yD11PTmyPclBrWr3qP9am",
-            title: "Save time!",
-            text: "Efficient essay writing means no more switching back-and-forth between referencing guides. Automate your references with ease!",
-          },
-          {
-            url: "https://drive.google.com/uc?id=15lMlvDPsXWVWvylO4XuC_b_afAYIqznh",
-            title: "",
-            text: "Eliminate last-minute referencing stress. Format your references immediately and never worry again.",
-          },
-        ],
-        link: {
-          text: "Go to site",
-          url: "https://referenceformatter.pages.dev/",
-        },
-        version: "WIP",
-      },
-    ],
-  };
+  import SoftwareList from "../components/softwarelist/SoftwareList.vue";
 </script>
 
 <template>
@@ -93,24 +10,9 @@
         <p v-html="softwareContent.description"></p>
       </div>
     </div> -->
-    <div class="items-container">
-      <div
-        v-for="(item, index) in softwareContent.items"
-        :class="index + 1 == softwareContent.items.length ? '' : 'item'"
-        :key="index">
-        <h1>{{ item.sectionTitle }}</h1>
-        <p>{{ item.sectionText }}</p>
-        <div v-if="item.carouselList != ''">
-          <Carousel :list="item.carouselList"></Carousel>
-        </div>
-        <div class="info">
-          <a class="call-to-action" :href="item.link.url" target="_blank">{{
-            item.link.text
-          }}</a>
-          <p>Version: {{ item.version }}</p>
-        </div>
-      </div>
-    </div>
+    <Suspense>
+      <SoftwareList></SoftwareList>
+    </Suspense>
   </div>
 </template>
 

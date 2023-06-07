@@ -48,13 +48,16 @@
           <div class="btn" @click="Next">&gt;</div>
         </div>
       </div>
+
       <div class="tab-container">
-        <div
-          class="tab"
-          :class="currentSlide == tabIndex + 1 ? 'active' : ''"
-          v-for="(item, tabIndex) in carouselList"
-          :key="tabIndex"
-          @click="currentSlide = tabIndex + 1"></div>
+        <div class="tab-inner">
+          <div
+            class="tab"
+            :class="currentSlide == tabIndex + 1 ? 'active' : ''"
+            v-for="(item, tabIndex) in carouselList"
+            :key="tabIndex"
+            @click="currentSlide = tabIndex + 1"></div>
+        </div>
       </div>
     </section>
   </div>
@@ -110,10 +113,20 @@
     position: absolute;
     display: flex;
     justify-content: space-around;
-    top: 90%;
-    left: calc(50% - 15%);
-    width: 30%;
+    bottom: 0%;
+    width: 100%;
+    height: 10%;
   }
+
+  .tab-inner {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    bottom: 0%;
+    width: 30%;
+    border-radius: 8px 8px 0px 0px;
+  }
+
   .tab {
     background-color: rgba(255, 255, 255, 0.3);
     border-radius: 50%;
@@ -121,10 +134,11 @@
     height: 10px;
     transition: all 0.5s;
     cursor: pointer;
+    filter: drop-shadow(0px 1px 2px rgba(0, 0, 0, 0.8));
   }
 
   .tab.active {
     transform: scale(1.2);
-    background-color: white;
+    background-color: var(--color-palette-6);
   }
 </style>

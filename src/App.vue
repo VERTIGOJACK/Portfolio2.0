@@ -7,7 +7,7 @@
 <template>
   <div>
     <Navbar class="sticky" />
-    <RouterView />
+      <RouterView />
   </div>
 </template>
 
