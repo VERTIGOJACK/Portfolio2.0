@@ -1,9 +1,13 @@
 <script setup>
-  import { ref, onMounted } from "vue";
+  import { ref, onMounted, watch } from "vue";
   const props = defineProps(["item", "currentSlide", "dim"]);
   const content = ref(null);
   onMounted(() => {
     content.value = props.item;
+  });
+
+  watch(props, (newprops) => {
+    content.value = newprops.item;
   });
 </script>
 

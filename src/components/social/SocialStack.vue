@@ -1,6 +1,6 @@
 <script setup>
   import { ref, onMounted } from "vue";
-  import SocialFull from "../components/social/SocialFull.vue";
+  import SocialFull from "./SocialFull.vue";
 
   const socials = ref([]);
 
@@ -18,7 +18,7 @@
       return object;
     });
 
-    socials.value = cleanArray;
+    socials.value = cleanArray.reverse();
   });
 </script>
 

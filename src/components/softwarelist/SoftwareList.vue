@@ -1,15 +1,9 @@
 <script setup>
   import Carousel from "../carousel/Carousel.vue";
   import { getData } from "./functions";
+  import { ref, onMounted } from "vue";
 
-  let softwareContent = {
-    title: "Software and Web",
-    description: `Although programming and coding is a relatively new pursuit for me,
-      i see the possibilities it offers for building in the digital realm. Developing websites,
-      applications, and other digital projects has become a true passion of mine. <br><br>
-      In fact, this very website is just one of many projects I've had the pleasure of working on.
-      Whether working independently or as part of a team,
-      i bring passion and dedication to quality for every project.`,
+  let softwareContent = ref({
     items: [
       {
         sectionTitle: "Loading...",
@@ -21,7 +15,7 @@
             text: "Loading...",
           },
         ],
-        link: {
+          link: {
           text: "Loading...",
           url: "Loading...",
         },
@@ -29,10 +23,12 @@
         platforms: "Loading...",
       },
     ],
-  };
+  });
 
-  const mydata = await getData();
-  softwareContent.items = mydata.reverse();
+  onMounted(async () => {
+    const mydata = await getData();
+    softwareContent.value.items = mydata.reverse();
+  });
   
 </script>
 

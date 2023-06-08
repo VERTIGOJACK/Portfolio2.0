@@ -3,16 +3,16 @@
 </script>
 
 <template>
-  <div id="software">
-    <!-- <div class="outer">
+  <div class="pagecontainer">
+    <div id="software" class="pagerestrict">
+      <!-- <div class="outer">
       <div class="text-container">
         <h1>{{ softwareContent.title }}</h1>
         <p v-html="softwareContent.description"></p>
       </div>
     </div> -->
-    <Suspense>
-      <SoftwareList></SoftwareList>
-    </Suspense>
+    <SoftwareList></SoftwareList>
+    </div>
   </div>
 </template>
 

@@ -3,9 +3,13 @@
 </script>
 
 <template>
-  <Suspense>
-    <GraphicsContent></GraphicsContent>
-  </Suspense>
+  <div class="pagecontainer">
+    <div class="pagerestrict">
+      <Suspense>
+        <GraphicsContent></GraphicsContent>
+      </Suspense>
+    </div>
+  </div>
 </template>
 
 <style scoped></style>

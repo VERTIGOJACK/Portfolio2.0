@@ -28,6 +28,11 @@
     carouselList.value = props.list;
     slideCount.value = props.list.length;
   });
+
+  watch(props, (values) => {
+    carouselList.value = values.list;
+    slideCount.value = values.list.length;
+  });
 </script>
 
 <template>
