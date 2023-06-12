@@ -2,6 +2,16 @@
   import { ref, onMounted } from "vue";
   import SocialFull from "./SocialFull.vue";
 
+  const classArray = ["blue", "red", "yellow"];
+
+  let counter = 0;
+
+  const CountClass = () => {
+    let mClass = counter;
+    counter >= 2 ? (counter = 0) : counter++;
+    return classArray[mClass];
+  };
+
   const socials = ref([]);
 
   onMounted(async () => {
@@ -17,7 +27,6 @@
       object.icon = item.acf.contact_icon;
       return object;
     });
-
     socials.value = cleanArray.reverse();
   });
 </script>
@@ -27,6 +36,7 @@
     v-for="item in socials"
     :fontawesomeicon="item.icon"
     :link="item.link"
-    :name="item.name">
+    :name="item.name"
+    :labelclass="CountClass()">
   </SocialFull>
 </template>

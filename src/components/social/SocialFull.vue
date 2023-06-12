@@ -1,7 +1,13 @@
 <script setup>
   import { ref, onMounted } from "vue";
 
-  const props = defineProps({ fontawesomeicon: "", link: "", name: "" });
+  const props = defineProps({
+    fontawesomeicon: "",
+    link: "",
+    name: "",
+    labelclass: "",
+    linkclass: "",
+  });
   const type = ref("");
 
   onMounted(() => {
@@ -17,7 +23,7 @@
 
 <template>
   <section class="container">
-    <div class="top">
+    <div class="top" :class="labelclass">
       <i :class="props.fontawesomeicon"></i>
       <h1 class="name">{{ props.name }}</h1>
     </div>
@@ -50,5 +56,15 @@
     font-size: 1rem;
     margin: 0px;
     margin-left: 4px;
+  }
+
+  .blue {
+    color: var(--accent-1);
+  }
+  .red {
+    color: var(--accent-2);
+  }
+  .yellow {
+    color: var(--accent-3);
   }
 </style>

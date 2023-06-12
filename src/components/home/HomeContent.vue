@@ -1,12 +1,13 @@
 <script setup>
-  import { ref, onMounted } from "vue";
+  import { ref, onMounted, watch } from "vue";
+  import SwirlDiv from "../customdiv/SwirlDiv.vue";
 
-  const sections = {
+  const sections = ref({
     title: "Loading...",
     content: "Loading...",
-  };
+  });
 
-  let profilePic = null;
+  let profilePic = ref(null);
 
   const getData = async () => {
     const response = await fetch(
@@ -18,14 +19,14 @@
 
     // Set the content as the innerHTML of the temporary element
     tempElement.innerHTML = json.title.rendered;
-    sections.title = tempElement.innerHTML;
+    sections.value.title = tempElement.innerHTML;
 
     // Set the content as the innerHTML of the temporary element
     tempElement.innerHTML = json.content.rendered;
-    sections.content = tempElement.innerHTML;
+    sections.value.content = tempElement.innerHTML;
 
     if (json.featured_media != "") {
-      profilePic = await getMediaById(json.featured_media);
+      profilePic.value = await getMediaById(json.featured_media);
     }
   };
 
@@ -38,11 +39,12 @@
     return json.source_url;
   };
 
-  await getData();
-
   const textWidth = ref(0);
   const textHeight = ref(0);
-  onMounted(() => {
+
+  //when mounted, calculate
+  onMounted(async () => {
+    await getData();
     const slanted = document.querySelector(".slanted");
     textWidth.value = slanted.clientWidth + "px";
     textHeight.value = slanted.clientHeight + "px";
@@ -86,24 +88,12 @@
     bottom: 10%;
     transform: rotate(-10deg);
   }
-  .slanted-background {
-    position: absolute;
-    left: -5000px;
-    top: 100%;
-    border-style: dashed;
-    border-width: 20px;
-    border-bottom: 0;
-    border-color: var(--color-palette-1);
-    width: 10000px;
-    height: 100px;
-    z-index: -8;
-  }
 
   img {
     width: 50px;
     height: 50px;
     aspect-ratio: 1/1;
-    background: var(--color-palette-6);
+    background: var(--accent-3);
     border-radius: 100%;
     margin: 10px;
   }

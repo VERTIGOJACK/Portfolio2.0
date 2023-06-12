@@ -28,12 +28,13 @@
     height: 100%;
     width: 50px;
     aspect-ratio: 1/1;
-    --active-color: var(--color-palette-6);
-    --inactive-color: var(--color-palette-6);
+    --active-color: var(--monochrome-5);
+    --inactive-color: var(--monochrome-5);
+    --hover-color: var(--monochrome-3);
   }
 
   .hamburger:hover div {
-    background-color: var(--color-palette-2);
+    background-color: var(--hover-color);
   }
 
   div {

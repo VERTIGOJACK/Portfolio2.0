@@ -1,29 +1,38 @@
 <script setup>
+  import Clock from "../components/clock/Clock.vue";
   import Herothree from "../components/herothree/Herothree.vue";
   import HomeContent from "../components/home/HomeContent.vue";
   import SocialStack from "../components/social/SocialStack.vue";
+  import SwirlDiv from "../components/customdiv/SwirlDiv.vue";
 </script>
 
 <template>
-  <Suspense>
-    <div class="pagecontainer">
-      <div id="home" class="pagerestrict">
-        <!-- three js thing here instead of hero probably -->
-        <div class="hero">
-          <Herothree></Herothree>
-        </div>
-        <Suspense>
-          <HomeContent></HomeContent>
-        </Suspense>
-        <div class="social">
-          <SocialStack></SocialStack>
-        </div>
+  <div class="pagecontainer">
+    <div id="home" class="pagerestrict">
+      <SwirlDiv class="hero">
+        <Clock class="clock"></Clock>
+        <Herothree></Herothree>
+      </SwirlDiv>
+      <SwirlDiv class="swirl">
+        <HomeContent></HomeContent>
+      </SwirlDiv>
+
+      <div class="social">
+        <SocialStack></SocialStack>
       </div>
     </div>
-  </Suspense>
+  </div>
 </template>
 
 <style scoped>
+  .swirl {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    padding-bottom: var(--lengths-lg-2);
+    width: 100%;
+  }
+
   #home {
     display: flex;
     align-items: center;
@@ -32,11 +41,28 @@
   }
 
   .hero {
-    height: 500px;
-    background: linear-gradient(var(--color-palette-4), var(--color-palette-3));
+    position: relative;
+    height: var(--lengths-lg-3);
+    width: 100%;
+    background: linear-gradient(
+        to top left,
+        transparent,
+        rgba(255, 153, 150, 0),
+        var(--accent-1)
+      ),
+      linear-gradient(
+          to top right,
+          transparent,
+          rgba(255, 153, 150, 0),
+          var(--accent-2)
+        )
+        var(--accent-3);
+  }
+  .clock {
+    position: absolute;
   }
 
   .social {
-    padding-bottom: 20px;
+    padding-bottom: var(--lengths-md-3);
   }
 </style>

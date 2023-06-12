@@ -1,5 +1,5 @@
 <script setup>
-  import { onMounted } from "vue";
+  import { onMounted, watch } from "vue";
   import * as THREE from "three";
   import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader.js";
   const logo = "logo.gltf";
@@ -13,30 +13,31 @@
 
     //get container
     const container = document.querySelector(".three");
-
-    let width = container.clientWidth;
-    let height = container.clientHeight;
+    //get container width height
+    let width = container.getBoundingClientRect().width;
+    let height = container.getBoundingClientRect().height;
 
     //setup scene camera and renderer
     var scene = new THREE.Scene();
     var camera = new THREE.PerspectiveCamera(75, width / height, 0.1, 1000);
+    camera.position.x = 0;
+    camera.position.y = -0.1;
     camera.position.z = 1;
 
     var renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
 
-    //set size and append to container
-
-    renderer.setSize(width, height);
+    //append to container
     container.appendChild(renderer.domElement);
 
+    const canvas = document.querySelector("canvas");
+
+    //resizewindow
     const settingsResize = () => {
-      width = container.clientWidth;
-      height = container.clientHeight;
-      const newWidth = width;
-      const newHeight = height;
-      camera.aspect = newWidth / newHeight;
+      width = container.getBoundingClientRect().width;
+      height = container.getBoundingClientRect().height;
+      camera.aspect = width / height;
       camera.updateProjectionMatrix();
-      renderer.setSize(newWidth, newHeight);
+      renderer.setSize(width, height);
     };
 
     //get a gltfloader and load in our file (async)
@@ -49,12 +50,9 @@
     fillLight.position.set(0, 0, 10); // set the position of the light
     scene.add(fillLight);
 
-    const initialPosition = fillLight.position.y;
-
     //get logo
     const logoobject = scene.children[0];
-    //rotate logo
-    logoobject.rotation.x += 90;
+    logoobject.rotation.x += 96;
 
     // Set up the initial rotation of the object
     const initialRotation = logoobject.rotation.y;
@@ -62,10 +60,6 @@
     // Set up the sway parameters
     const swayFrequency = 1; // Frequency of the sway
     const swayAmplitude = 0.1; // Amplitude of the sway
-    //on resize
-    window.addEventListener("resize", () => {
-      settingsResize();
-    });
 
     //animate loop
     function animate() {
@@ -73,11 +67,10 @@
       const time = performance.now() * 0.001; // Get the current time in seconds
       const swayAnglez = Math.sin(time * swayFrequency) * swayAmplitude; // Calculate the sway angle using a sine wave
       const swayAngley = (Math.sin(time * swayFrequency) * swayAmplitude) / 2; // Calculate the sway angle using a sine wave
-      const swayPos = Math.sin(time * swayFrequency) * swayAmplitude * 50; // Calculate the sway angle using a sine wave
       logoobject.rotation.z = initialRotation + swayAnglez; // Apply the sway angle to the object's rotation
       logoobject.rotation.y = initialRotation + swayAngley; // Apply the sway angle to the object's rotation
-      fillLight.position.x = initialPosition + -swayPos;
       requestAnimationFrame(animate);
+      settingsResize();
       renderer.render(scene, camera);
     }
     animate();
@@ -98,11 +91,10 @@
   .three {
     transition: opacity 0.5s ease-in-out;
     height: 100%;
-    width: 100vw;
+    width: 100%;
   }
 
   .loaded {
-    filter: drop-shadow(0 0 32px rgba(0, 0, 0, 0.8));
     opacity: 1;
   }
 </style>

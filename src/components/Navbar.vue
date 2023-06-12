@@ -38,12 +38,14 @@
 
 <style scoped>
   #top-nav {
-    --background: var(--color-palette-3);
-    --altbackground: var(--color-palette-4);
-    --althover: var(--color-palette-5);
+    --background: var(--monochrome-1);
+    --background-hover: var(--monochrome-1);
+    --link: var(--monochrome-1);
+    --link-hover: var(--monochrome-2);
+    --logo: var(--monochrome-5);
+    --logo-hover: var(--monochrome-4);
 
     font-size: x-large;
-    filter: var(--common-shadow);
     z-index: 100;
   }
 
@@ -55,7 +57,8 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background: var(--background);
+    background: var(--background); 
+    backdrop-filter: blur(10px);
   }
 
   .logo {
@@ -64,7 +67,7 @@
     margin: 0;
     padding: 0;
     width: 35px;
-    color: var(--color-palette-6);
+    color: var(--logo);
     transition: all 0.1s ease-in-out;
   }
 
@@ -74,11 +77,11 @@
     margin: 0;
     padding: 10px;
     width: auto;
-    color: var(--color-palette-6);
+    color: var(--logo);
     transition: all 0.1s ease-in-out;
   }
   .logo-text:hover {
-    color: var(--color-palette-2);
+    color: var(--logo-hover);
   }
 
   .links {
@@ -87,10 +90,11 @@
     flex-direction: column;
     transform-origin: top right;
     right: 0;
-    background-color: var(--altbackground);
+    backdrop-filter: blur(10px);
     transform: translateY(-100%);
     z-index: -1;
     transition: all 0.3s ease-in-out;
+    background-color: var(--transparent-25);
     width: 100%;
   }
 
@@ -104,10 +108,11 @@
     padding-top: 20px;
     padding-bottom: 20px;
     transition: all ease-in-out 0.1s;
+    color: var(--link);
   }
 
   .links a:hover {
-    background-color: var(--althover);
+    color: var(--link-hover);
   }
 
   .show {

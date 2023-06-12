@@ -1,7 +1,7 @@
 <script setup>
   import { ref, onMounted } from "vue";
   import SocialFull from "../components/social/SocialFull.vue";
-
+  import Clock from "../components/clock/Clock.vue"
   const socials = ref([]);
 
   onMounted(async () => {
@@ -29,4 +29,5 @@
     :link="item.link"
     :name="item.name">
   </SocialFull>
+  <Clock></Clock>
 </template>
