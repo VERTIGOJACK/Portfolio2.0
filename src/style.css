@@ -10,7 +10,7 @@
   --lengths-md-3: 24px;
   --lengths-md-3: 32px;
   /* lengths lg */
-  --lengths-lg-2: 100px;
+  --lengths-lg-1: 100px;
   --lengths-lg-2: 250px;
   --lengths-lg-3: 500px;
   /* fonts */
@@ -47,6 +47,9 @@
         var(--accent-2)
       )
       var(--accent-3);
+
+  --loading-width: 2000px;
+  --loading-speed: 1s;
 
   font-family: var(--font4);
   line-height: 1.5;
@@ -151,18 +154,22 @@ button:focus-visible {
 .loading {
   opacity: 0.2;
   border-radius: var(--lengths-sm-1);
-  background: linear-gradient(45deg, gray, lightgray, gray);
-  background-repeat: repeat-x;
-  background-size: 100vw auto;
-  animation: loadscroll linear infinite forwards 2s;
+  background: linear-gradient(90deg, gray, lightgray, gray);
+  background-size: var(--loading-width) auto;
+  animation: loadscroll linear infinite var(--loading-speed);
+}
+
+.loading,
+.loading * {
+  color: transparent;
 }
 
 @keyframes loadscroll {
   0% {
-    background-position-x: 0vw;
+    background-position-x: 0px;
   }
   100% {
-    background-position-x: -100vw;
+    background-position-x: calc(0px - var(--loading-width));
   }
 }
 
