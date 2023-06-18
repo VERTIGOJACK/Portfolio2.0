@@ -1,6 +1,5 @@
 <script setup>
   import { ref, onMounted, watch } from "vue";
-  import SwirlDiv from "../customdiv/SwirlDiv.vue";
 
   const sections = ref({
     title: "Loading...",

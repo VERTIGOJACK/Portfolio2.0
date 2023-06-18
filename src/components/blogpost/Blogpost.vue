@@ -4,6 +4,9 @@
   import BlogpostFallback from "./BlogpostFallback.vue";
   import Postmeta from "./Postmeta.vue";
   import SwirlDiv from "../customdiv/SwirlDiv.vue";
+  import formatDateTime from "../helper/formatDateTime";
+  
+  const props = defineProps({"postid":""});
   const content = ref({ title: "", content: "", featuredMedia: "" });
   const meta = ref({
     authorName: "",
@@ -13,15 +16,10 @@
   });
   const loaded = ref(false);
 
-  const formatDateTime = (string) => {
-    const dateTime = string.split("T");
-    // dateTime[1] = dateTime[1].substring(0, 4);
-    return dateTime[0];
-  };
-
   onMounted(async () => {
     let res = await fetch(
-      "https://content.vertigodigital.se/wp-json/wp/v2/posts/102"
+      "https://content.vertigodigital.se/wp-json/wp/v2/posts/" +
+        props.postid
     );
     let json = await res.json();
     //set content
@@ -38,7 +36,7 @@
     json = await res.json();
 
     meta.value.authorName = json.name;
-    meta.value.authorImage = json.avatar_urls["24"];
+    meta.value.authorImage = json.avatar_urls["48"];
 
     loaded.value = true;
   });

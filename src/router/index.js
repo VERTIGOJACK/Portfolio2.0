@@ -3,6 +3,9 @@ import Home from "../views/Home.vue";
 import Software from "../views/Software.vue";
 import Test from "../views/Test.vue";
 import Graphics from "../views/Graphics.vue";
+import BlogArticle from "../views/BlogArticle.vue";
+import BlogHome from "../views/BlogHome.vue";
+import BlogList from "../views/BlogList.vue";
 const routes = [
   {
     path: "/",
@@ -24,6 +27,22 @@ const routes = [
     name: "test",
     component: Test,
   },
+  {
+    path: "/blog",
+    name: "blog",
+    component: BlogHome,
+    children: [
+      {
+        path: "",
+        component: BlogList,
+      },
+      {
+        path: "post/:id",
+        component: BlogArticle,
+      },
+    ],
+  },
+  ,
 ];
 
 const router = createRouter({

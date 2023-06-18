@@ -4,11 +4,12 @@
     avatar: "",
     published: "",
     edited: "",
+    fallback: false,
   });
 </script>
 
 <template>
-  <div id="container">
+  <div v-if="!fallback" id="container">
     <div class="author">
       <img :src="avatar" alt="" />
       <div class="details">
@@ -20,15 +21,28 @@
       <p v-if="edited == published" class="edited">Edited: {{ edited }}</p>
     </div>
   </div>
+  <div v-if="fallback" id="fallback">
+    <div class="author">
+      <div class="imgload loading"></div>
+      <div class="details">
+        <p class="name loading">Lorem.</p>
+        <p class="published loading">Lorem, ipsum.</p>
+      </div>
+    </div>
+    <div class="edit">
+      <p v-if="edited == published" class="edited loading">Lorem, ipsum.</p>
+    </div>
+  </div>
 </template>
 
 <style scoped>
-  #container {
+  #container,#fallback{
     display: flex;
     justify-content: space-between;
     align-items: start;
     width: 100%;
   }
+
   p {
     padding: var(--lengths-sm-1);
     margin: var(--lengths-sm-1);
@@ -70,4 +84,10 @@
     justify-content: space-between;
   }
 
+  /* loading */
+  .imgload {
+    height: 42px;
+    width: 42px;
+    border-radius: 100%;
+  }
 </style>

@@ -157,6 +157,7 @@ button:focus-visible {
   background: linear-gradient(90deg, gray, lightgray, gray);
   background-size: var(--loading-width) auto;
   animation: loadscroll linear infinite var(--loading-speed);
+  user-select: none;
 }
 
 .loading,
@@ -172,6 +173,8 @@ button:focus-visible {
     background-position-x: calc(0px - var(--loading-width));
   }
 }
+
+
 
 /* @media (prefers-color-scheme: light) {
   :root {

@@ -10,6 +10,7 @@
     { text: "Music", link: "/music" },
     { text: "Contact", link: "/contact" },
     { text: "Test", link: "/test" },
+    { text: "Blog", link: "/blog" },
   ];
 
   const ToggleMenu = () => {
@@ -57,7 +58,7 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background: var(--background); 
+    background: var(--background);
     backdrop-filter: blur(10px);
   }
 
