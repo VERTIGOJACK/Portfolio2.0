@@ -4,30 +4,32 @@ import Herothree from "../components/herothree/Herothree.vue";
 import HomeContent from "../components/home/HomeContent.vue";
 import SocialStack from "../components/social/SocialStack.vue";
 import SwirlDiv from "../components/customdiv/SwirlDiv.vue";
-import SocialStackFallback from "../components/social/SocialStackFallback.vue";
+import Loading from "./Loading.vue";
 </script>
 
 <template>
-  <div class="pagecontainer">
-    <div id="home" class="pagerestrict">
-      <SwirlDiv class="hero">
-        <Clock class="clock"></Clock>
-        <Herothree></Herothree>
-      </SwirlDiv>
-      <SwirlDiv class="swirl">
-        <HomeContent></HomeContent>
-      </SwirlDiv>
-
-      <div class="social">
-        <Suspense>
-          <SocialStack></SocialStack>
-          <template #fallback>
-            <SocialStackFallback></SocialStackFallback>
-          </template>
-        </Suspense>
+  <Suspense>
+    <template #default>
+      <div class="pagecontainer">
+        <div id="home" class="pagerestrict">
+          <SwirlDiv class="hero">
+            <Clock class="clock"></Clock>
+            <Herothree></Herothree>
+          </SwirlDiv>
+          <SwirlDiv class="swirl">'
+          
+            <!-- <HomeContent></HomeContent> -->
+          </SwirlDiv>
+          <div class="social">
+            <!-- <SocialStack></SocialStack> -->
+          </div>
+        </div>
       </div>
-    </div>
-  </div>
+    </template>
+    <template #fallback>
+      <Loading></Loading>
+    </template>
+  </Suspense>
 </template>
 
 <style scoped>

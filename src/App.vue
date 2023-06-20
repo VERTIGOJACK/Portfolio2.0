@@ -8,7 +8,7 @@ import "../src/highlight.css";
 <template>
   <div>
     <Navbar class="sticky" />
-    <RouterView />
+    <RouterView></RouterView>
   </div>
 </template>
 

@@ -1,7 +1,6 @@
 <script setup>
-import { ref, onMounted } from "vue";
+import { ref } from "vue";
 import SocialFull from "./SocialFull.vue";
-import SocialFullFallback from "./SocialFullFallback.vue";
 
 const classArray = ["blue", "red", "yellow"];
 
@@ -13,8 +12,7 @@ const CountClass = () => {
   return classArray[mClass];
 };
 
-const socials = ref([]);
-
+const socials = ref([{ icon: "", link: "", name: "" }]);
 const apiCall = async () => {
   const res = await fetch(
     "https://content.vertigodigital.se/wp-json/wp/v2/social-media"
@@ -28,21 +26,20 @@ const apiCall = async () => {
     object.icon = item.acf.contact_icon;
     return object;
   });
-  socials.value = cleanArray.reverse();
-};
 
+  socials.value = cleanArray.reverse();
+  loaded.value = true;
+};
 await apiCall();
 </script>
 
 <template>
-  
-    <SocialFull
-      v-for="item in socials"
-      :fontawesomeicon="item.icon"
-      :link="item.link"
-      :name="item.name"
-      :labelclass="CountClass()"
-    >
-    </SocialFull>
-  
+  <SocialFull
+    v-for="item in socials"
+    :fontawesomeicon="item.icon"
+    :link="item.link"
+    :name="item.name"
+    :labelclass="CountClass()"
+  >
+  </SocialFull>
 </template>
