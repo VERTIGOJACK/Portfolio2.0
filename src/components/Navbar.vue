@@ -1,21 +1,20 @@
 <script setup>
-  import { ref } from "vue";
-  import Hamburger from "./Hamburger.vue";
-  const isMenuOpen = ref(false);
+import { ref } from "vue";
+import Hamburger from "./Hamburger.vue";
+const isMenuOpen = ref(false);
 
-  const menuOptions = [
-    { text: "Home", link: "/" },
-    { text: "Software", link: "/software" },
-    { text: "Graphics", link: "/graphics" },
-    { text: "Music", link: "/music" },
-    { text: "Contact", link: "/contact" },
-    { text: "Test", link: "/test" },
-    { text: "Blog", link: "/blog" },
-  ];
+const menuOptions = [
+  { text: "Home", link: "/" },
+  { text: "Software", link: "/software" },
+  { text: "Graphics", link: "/graphics" },
+  { text: "Music", link: "/music" },
+  { text: "Test", link: "/test" },
+  { text: "Blog", link: "/blog" },
+];
 
-  const ToggleMenu = () => {
-    isMenuOpen.value = !isMenuOpen.value;
-  };
+const ToggleMenu = () => {
+  isMenuOpen.value = !isMenuOpen.value;
+};
 </script>
 
 <template>
@@ -24,7 +23,11 @@
       <router-link to="/" class="logo-text" @click="isMenuOpen = false">
         VERTIGODIGITAL.
       </router-link>
-      <Hamburger @click="ToggleMenu" :active="isMenuOpen"></Hamburger>
+      <Hamburger
+        class="hamburger"
+        @click="ToggleMenu"
+        :active="isMenuOpen"
+      ></Hamburger>
     </div>
     <div class="links" :class="isMenuOpen ? 'show' : ''">
       <router-link
@@ -38,89 +41,93 @@
 </template>
 
 <style scoped>
-  #top-nav {
-    --background: var(--monochrome-1);
-    --background-hover: var(--monochrome-1);
-    --link: var(--monochrome-1);
-    --link-hover: var(--monochrome-2);
-    --logo: var(--monochrome-5);
-    --logo-hover: var(--monochrome-4);
+#top-nav {
+  --background: var(--monochrome-1);
+  --background-hover: var(--monochrome-1);
+  --link: var(--monochrome-1);
+  --link-hover: var(--monochrome-2);
+  --logo: var(--monochrome-5);
+  --logo-hover: var(--monochrome-4);
 
-    font-size: x-large;
-    z-index: 100;
-  }
+  font-size: x-large;
+  z-index: 100;
+}
 
-  nav {
-    width: 100%;
-    height: auto;
-  }
-  .navbar-content {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    background: var(--background);
-    backdrop-filter: blur(10px);
-  }
+nav {
+  width: 100%;
+  height: auto;
+}
+.navbar-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: var(--background);
+  backdrop-filter: blur(10px);
+}
 
-  .logo {
-    display: flex;
-    align-items: center;
-    margin: 0;
-    padding: 0;
-    width: 35px;
-    color: var(--logo);
-    transition: all 0.1s ease-in-out;
-  }
+.logo {
+  display: flex;
+  align-items: center;
+  margin: 0;
+  padding: 0;
+  width: 35px;
+  color: var(--logo);
+  transition: all 0.1s ease-in-out;
+}
 
-  .logo-text {
-    display: flex;
-    align-items: center;
-    margin: 0;
-    padding: 10px;
-    width: auto;
-    color: var(--logo);
-    transition: all 0.1s ease-in-out;
-  }
-  .logo-text:hover {
-    color: var(--logo-hover);
-  }
+.logo-text {
+  display: flex;
+  align-items: center;
+  margin: 0;
+  padding: var(--lengths-md-2);
+  width: auto;
+  color: var(--logo);
+  transition: all 0.1s ease-in-out;
+}
 
-  .links {
-    position: absolute;
-    display: flex;
-    flex-direction: column;
-    transform-origin: top right;
-    right: 0;
-    backdrop-filter: blur(10px);
-    transform: translateY(-100%);
-    z-index: -1;
-    transition: all 0.3s ease-in-out;
-    background-color: var(--transparent-25);
-    width: 100%;
-  }
+.hamburger {
+  padding: var(--lengths-md-2);
+}
+.logo-text:hover {
+  color: var(--logo-hover);
+}
 
-  a {
-    width: 100%;
-    display: flex;
-    justify-content: center;
-  }
+.links {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  transform-origin: top right;
+  right: 0;
+  backdrop-filter: blur(10px);
+  transform: translateY(-100%);
+  z-index: -1;
+  transition: all 0.3s ease-in-out;
+  background-color: var(--transparent-25);
+  width: 100%;
+}
 
-  .links a {
-    padding-top: 20px;
-    padding-bottom: 20px;
-    transition: all ease-in-out 0.1s;
-    color: var(--link);
-  }
+a {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
 
-  .links a:hover {
-    color: var(--link-hover);
-  }
+.links a {
+  padding-top: 20px;
+  padding-bottom: 20px;
+  transition: all ease-in-out 0.1s;
+  color: var(--link);
+}
 
-  .show {
-    transform: translateY(0%);
-  }
+.links a:hover {
+  color: var(--link-hover);
+}
 
-  .logo {
-    padding: 10px;
-  }
+.show {
+  transform: translateY(0%);
+}
+
+.logo {
+  padding: 10px;
+}
 </style>

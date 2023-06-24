@@ -2,6 +2,7 @@
 import { RouterView } from "vue-router";
 import "../src/style.css";
 import "../src/highlight.css";
+import "../src/wp.css"
 
 </script>
 

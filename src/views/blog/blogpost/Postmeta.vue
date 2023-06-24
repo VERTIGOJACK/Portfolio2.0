@@ -18,7 +18,7 @@ const props = defineProps({
       </div>
     </div>
     <div class="edit">
-      <p v-if="edited == published" class="edited">Edited: {{ edited }}</p>
+      <p v-if="edited != published" class="edited">Edited: {{ edited }}</p>
     </div>
   </div>
 </template>
