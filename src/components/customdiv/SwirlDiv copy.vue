@@ -20,7 +20,7 @@
   <div class="clipdiv">
     <slot> </slot>
     <div class="clipcontainer">
-      <svg height="1" width="0">
+      <svg height="0" width="0">
         <defs>
           <clipPath id="clip" clipPathUnits="objectBoundingBox">
             <path
@@ -34,18 +34,18 @@
         </defs>
       </svg>
 
-      <!-- <div class="border-1"></div>
+      <div class="border-1"></div>
       <div class="border-2"></div>
-      <div class="border-3"></div> -->
+      <div class="border-3"></div>
 
-      <svg height="1" width="0">
+      <svg height="0" width="0">
         <defs>
-          <!-- <clipPath id="clip2" clipPathUnits="objectBoundingBox">
+          <clipPath id="clip2" clipPathUnits="objectBoundingBox">
             <path
               d="M0,0.9
     C .5 .9, .45 .75, 1 0.95 L1 1 L0 1
     Z" />
-          </clipPath> -->
+          </clipPath>
         </defs>
       </svg>
     </div>
@@ -54,16 +54,11 @@
 
 <style scoped>
   .clipdiv {
-    position: relative;
     clip-path: url(#clip);
   }
 
   .clipcontainer {
-    position: absolute;
-    bottom: 0;
-    width: 100%;
-    height: 500px;
-    clip-path: url(#clip);
+    height: 100px;
   }
 
   .border-1 {

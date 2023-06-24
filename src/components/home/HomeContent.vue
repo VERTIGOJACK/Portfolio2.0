@@ -42,7 +42,7 @@ const textHeight = ref(0);
 
 await getData();
 
-onUpdated(() => {
+onMounted(() => {
   const slanted = document.querySelector(".slanted");
   textWidth.value = slanted.clientWidth + "px";
   textHeight.value = slanted.clientHeight + "px";

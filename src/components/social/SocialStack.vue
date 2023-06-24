@@ -28,7 +28,6 @@ const apiCall = async () => {
   });
 
   socials.value = cleanArray.reverse();
-  loaded.value = true;
 };
 await apiCall();
 </script>
