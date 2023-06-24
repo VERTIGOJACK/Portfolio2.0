@@ -37,7 +37,7 @@
     display: flex;
     justify-content: center;
     transition: all 0.5s ease-in-out;
-    filter: var(--common-shadow);
+
   }
   /*  */
   .slide-text {

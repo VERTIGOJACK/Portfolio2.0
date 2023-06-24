@@ -20,7 +20,7 @@ const routes = [
   {
     path: "/graphics",
     name: "graphics",
-    component: () => import("../views/Graphics.vue"),
+    component: () => import("../views/graphics/Graphics.vue"),
   },
   {
     path: "/test",
@@ -30,15 +30,15 @@ const routes = [
   {
     path: "/blog",
     name: "blog",
-    component: () => import("../views/BlogHome.vue"),
+    component: () => import("../views/blog/BlogHome.vue"),
     children: [
       {
         path: "",
-        component: () => import("../views/BlogList.vue"),
+        component: () => import("../views/blog/BlogList.vue"),
       },
       {
         path: "post/:id",
-        component: () => import("../views/BlogArticle.vue"),
+        component: () => import("../views/blog/BlogArticle.vue"),
       },
     ],
   },

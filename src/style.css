@@ -31,7 +31,7 @@
   --monochrome-5: black;
   /* transparent black */
   --transparent-25: rgba(0, 0, 0, 0.25);
-  --common-shadow: drop-shadow(2px 2px 8px rgba(0, 0, 0, 0.5));
+  --common-shadow: drop-shadow(1px 1px 2px rgba(0, 0, 0, 0.5));
   --outline-shadow: drop-shadow(0px 0px 1px rgba(0, 0, 0, 0.5));
 
   --custom-gradient: linear-gradient(
@@ -109,16 +109,15 @@ button:focus-visible {
 }
 
 .call-to-action {
-  background-color: var(--color-palette-1);
-  filter: var(--common-shadow);
+  background-color: var(--accent-1);
   border-radius: 3px;
   padding: 4px;
   transition: all 0.2s ease-in-out;
 }
 
 .call-to-action:hover {
-  background-color: var(--color-palette-2);
-  color: var(--color-palette-6);
+  background-color: var(--accent-3);
+  color: var(--monochrome-1);
   filter: var(--common-shadow);
   transform: scale(1.05);
 }
@@ -163,6 +162,10 @@ button:focus-visible {
 .loading,
 .loading * {
   color: transparent;
+}
+
+.swirl-padding{
+padding-bottom: var(--lengths-lg-1 );
 }
 
 @keyframes loadscroll {

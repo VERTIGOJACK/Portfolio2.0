@@ -1,5 +1,5 @@
 <script setup>
-import randLorem from "../components/helper/randLorem.js";
+import randLorem from "../../helper/randLorem.js";
 </script>
 <template>
   <div class="pagecontainer">
