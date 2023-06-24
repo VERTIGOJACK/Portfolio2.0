@@ -110,6 +110,7 @@
   .btn {
     cursor: pointer;
     background-color: rgba(0, 0, 0, 0.3);
+    color: var(--monochrome-1);
     padding: 10px;
     user-select: none;
   }
@@ -144,6 +145,6 @@
 
   .tab.active {
     transform: scale(1.2);
-    background-color: var(--color-palette-6);
+    background-color: var(--monochrome-1);
   }
 </style>

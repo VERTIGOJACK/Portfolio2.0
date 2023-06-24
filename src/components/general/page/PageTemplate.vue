@@ -1,9 +1,9 @@
 <script setup>
-import Navbar from "../../Navbar.vue";
-import SocialStack from "../../social/SocialStack.vue";
-import CenterDiv from "../div/CenterDiv.vue";
-import SwirlDiv from "../div/SwirlDiv.vue";
-import Loading from "./Loading.vue";
+  import Navbar from "../../Navbar.vue";
+  import SocialStack from "../../social/SocialStack.vue";
+  import CenterDiv from "../div/CenterDiv.vue";
+  import SwirlDiv from "../div/SwirlDiv.vue";
+  import Loading from "./Loading.vue";
 </script>
 
 <template>
@@ -22,26 +22,31 @@ import Loading from "./Loading.vue";
       </div>
     </template>
     <template #fallback>
-      <Loading></Loading>
+      <div class="pagecontainer">
+        <div class="pagerestrict">
+          <Navbar class="sticky" />
+          <Loading></Loading>
+        </div>
+      </div>
     </template>
   </Suspense>
 </template>
 <style scoped>
-svg {
-  display: none;
-}
+  svg {
+    display: none;
+  }
 
-.noise {
-  background: url("#noise");
-}
+  .noise {
+    background: url("#noise");
+  }
 
-.sticky {
-  position: sticky;
-  top: 0;
-}
+  .sticky {
+    position: sticky;
+    top: 0;
+  }
 
-.social {
-  padding-bottom: var(--lengths-md-3);
-  width: 80%;
-}
+  .social {
+    padding-bottom: var(--lengths-md-3);
+    width: 80%;
+  }
 </style>

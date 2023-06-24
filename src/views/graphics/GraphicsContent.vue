@@ -81,6 +81,7 @@ const showModal = (url) => {
       </Gallery>
     </div>
   </div>
+  
 </template>
 
 <style scoped>

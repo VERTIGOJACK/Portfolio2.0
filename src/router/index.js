@@ -29,12 +29,12 @@ const routes = [
   },
   {
     path: "/blog",
-    name: "blog",
+    name: "",
     component: () => import("../views/blog/BlogHome.vue"),
     children: [
       {
         path: "",
-        component: () => import("../views/blog/BlogList.vue"),
+        component: () => import("../views/blog/bloglist/BlogList.vue"),
       },
       {
         path: "post/:id",
