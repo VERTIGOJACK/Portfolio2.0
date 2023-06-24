@@ -11,7 +11,7 @@ import PageTemplate from "../components/general/page/PageTemplate.vue";
   <PageTemplate>
     <SwirlDiv>
       <div class="hero">
-        <div class="hero-background"></div>
+        <div class="hero-background "></div>
         <Clock class="clock"></Clock>
         <Herothree></Herothree>
       </div>

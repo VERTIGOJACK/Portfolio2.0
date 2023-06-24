@@ -3,6 +3,7 @@ import { ref } from "vue";
 import Carousel from "../../components/carousel/Carousel.vue";
 import Gallery from "../../components/gallery/Gallery.vue";
 import Modal from "../../components/modal/Modal.vue";
+
 //import data from JSON
 const galleryData = {
   highlights: [
@@ -18,6 +19,7 @@ const galleryData = {
     },
   ],
 };
+
 //return clean html
 const CleanHtml = (html) => {
   const tempItem = document.createElement("div");

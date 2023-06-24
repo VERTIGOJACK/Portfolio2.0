@@ -125,7 +125,6 @@ button:focus-visible {
 .pagecontainer {
   display: flex;
   justify-content: center;
-  background-color: var(--color-palette-3);
 }
 
 @media screen and (max-width: 800px) {
@@ -164,8 +163,8 @@ button:focus-visible {
   color: transparent;
 }
 
-.swirl-padding{
-padding-bottom: var(--lengths-lg-1 );
+.swirl-padding {
+  padding-bottom: var(--lengths-lg-1);
 }
 
 @keyframes loadscroll {

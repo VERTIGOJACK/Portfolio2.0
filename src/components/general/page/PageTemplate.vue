@@ -26,8 +26,15 @@ import Loading from "./Loading.vue";
     </template>
   </Suspense>
 </template>
-
 <style scoped>
+svg {
+  display: none;
+}
+
+.noise {
+  background: url("#noise");
+}
+
 .sticky {
   position: sticky;
   top: 0;
