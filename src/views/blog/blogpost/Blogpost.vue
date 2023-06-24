@@ -2,8 +2,8 @@
 import { ref, onMounted, onUpdated } from "vue";
 import hljs from "highlight.js";
 import Postmeta from "./Postmeta.vue";
-import SwirlDiv from "../customdiv/SwirlDiv.vue";
-import formatDateTime from "../helper/formatDateTime";
+import SwirlDiv from "../../../components/general/div/SwirlDiv.vue";
+import formatDateTime from "../../../components/helper/formatDateTime";
 
 const props = defineProps({ postid: "" });
 const content = ref({ title: "", content: "", featuredMedia: "" });
@@ -33,7 +33,7 @@ onMounted(async () => {
   meta.value.authorName = json.name;
   meta.value.authorImage = json.avatar_urls["48"];
 
-  loaded.value = true;
+  
 });
 
 onUpdated(() => {
@@ -41,9 +41,9 @@ onUpdated(() => {
 });
 </script>
 <template>
-  <SwirlDiv v-if="loaded" class="swirl">
+  <SwirlDiv class="swirl">
     <div class="pagecontainer">
-      <div v-if="loaded" class="blogpost">
+      <div  class="blogpost">
         <h1 v-html="content.title"></h1>
         <Postmeta
           :name="meta.authorName"

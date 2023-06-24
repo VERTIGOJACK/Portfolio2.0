@@ -1,5 +1,5 @@
 <script setup>
-import { ref, onMounted, watch, onUpdated } from "vue";
+import { ref, onMounted } from "vue";
 
 const sections = ref({
   title: "",
@@ -42,7 +42,7 @@ const textHeight = ref(0);
 
 await getData();
 
-onMounted(() => {
+onMounted(async () => {
   const slanted = document.querySelector(".slanted");
   textWidth.value = slanted.clientWidth + "px";
   textHeight.value = slanted.clientHeight + "px";
@@ -97,9 +97,5 @@ img {
   background: var(--accent-3);
   border-radius: 100%;
   margin: 10px;
-}
-
-.text-container {
-  width: 80%;
 }
 </style>

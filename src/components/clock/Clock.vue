@@ -29,6 +29,8 @@ const updateClock = () => {
     amPm = "Lunch";
   } else if (hours >= 5) {
     amPm = "Morning";
+  } else if (hours >= 0) {
+    amPm = "Night";
   }
 
   // Add leading zeros if necessary

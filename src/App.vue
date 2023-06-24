@@ -1,14 +1,13 @@
 <script setup>
 import { RouterView } from "vue-router";
-import Navbar from "./components/Navbar.vue";
 import "../src/style.css";
 import "../src/highlight.css";
+
 </script>
 
 <template>
   <div>
-    <Navbar class="sticky" />
-    <RouterView></RouterView>
+    <RouterView > </RouterView>
   </div>
 </template>
 
@@ -16,5 +15,10 @@ import "../src/highlight.css";
 .sticky {
   position: sticky;
   top: 0;
+}
+
+.social {
+  padding-bottom: var(--lengths-md-3);
+  width: 80%;
 }
 </style>
