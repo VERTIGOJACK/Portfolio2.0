@@ -2,7 +2,6 @@
 import { computed, ref, onMounted } from "vue";
 import { useRoute } from "vue-router";
 import formatDateTime from "../../../components/helper/formatDateTime";
-import CenterDiv from "../../../components/general/div/CenterDiv.vue";
 import Search from "../../../components/search/Search.vue";
 
 const posts = ref([
