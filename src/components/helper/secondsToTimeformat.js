@@ -1,5 +1,4 @@
 const secondsToTimeFormat = (inputSeconds) => {
-  console.log(inputSeconds);
   if (inputSeconds <= 0 || isNaN(inputSeconds)) {
     return "--/--";
   } else {
