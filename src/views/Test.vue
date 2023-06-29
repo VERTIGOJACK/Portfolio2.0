@@ -1,90 +1,130 @@
 <script setup>
-  import { ref, onMounted } from "vue";
-  import PageTemplate from "../components/general/page/PageTemplate.vue";
-  import audioFile from "../assets/VERTIGOJACK - B2B.mp3";
+import { ref, onMounted } from "vue";
+import PageTemplate from "../components/general/page/PageTemplate.vue";
+import CenterDiv from "../components/general/div/CenterDiv.vue";
+import Visualizer from "../components/visualizer/Visualizer.vue";
+import { secondsToTimeFormat } from "../components/helper/secondsToTimeformat.js";
+const audio = ref(new Audio());
+const currentTime = ref(audio.value.currentTime);
+const audioData = ref({ title: "B2B", artist: "VERTIGOJACK" });
+audio.value.src = "/VERTIGOJACK - B2B.mp3";
 
-  onMounted(() => {
-    //create canvas element
-    const canvas = document.createElement("canvas");
-    const context = canvas.getContext("2d");
-    //fetch parent element from document and append
-    const element = document.getElementById("canvas");
-    element.appendChild(canvas);
+const togglePlay = () => {
+  if (audio.value.paused) {
+    audio.value.play();
+  } else {
+    audio.value.pause();
+  }
+};
 
-    //set canvas values, values are bound to style with clientW/clientH
-    const canvasWidth = canvas.clientWidth;
-    const canvasHeight = canvas.clientHeight;
-    //nice to haves
-    const canvasMiddle = canvasHeight / 2;
-    const margin = 10;
+const next = () => {
+  audio.value.src = "/VERTIGOJACK - B2B.mp3";
+  audio.value.play();
+};
+const previous = () => {
+  audio.value.src = "/VERTIGOJACK - B2B.mp3";
+  audio.value.play();
+};
 
-    //actualise values for canvas width and height
-    canvas.width = canvasWidth;
-    canvas.height = canvasHeight;
-
-    ////////////////////////////////////////////////
-
-    //create audio element
-    let audio = new Audio();
-    audio.src = audioFile;
-    //create analyzer elements
-    const audioContext = new window.AudioContext();
-
-    // init analyzers
-    audio.play();
-    let audioSource = audioContext.createMediaElementSource(audio);
-    let analyzer = audioContext.createAnalyser();
-    //connect source to analyzer and analyzer to destination.
-    audioSource.connect(analyzer);
-    analyzer.connect(audioContext.destination);
-    //set analyser buffer size
-    analyzer.fftSize = 64;
-    const bufferLength = analyzer.frequencyBinCount;
-    const dataArray = new Uint8Array(bufferLength);
-    const barWidth = canvas.width / bufferLength;
-    /////////////////////////////////////////////////
-    //draw line across canvas
-    let x = 0;
-    const canvasdraw = () => {
-      //reset x position
-      x = 0;
-      //reset flip
-      let flip = 1;
-      //clear canvas
-      context.clearRect(0, 0, canvas.width, canvas.height);
-      //load snapshot of sound into UInt8Array
-      analyzer.getByteFrequencyData(dataArray);
-      //init position and settings of canvas pen
-      context.strokeStyle = "black";
-      context.beginPath();
-      context.moveTo(x, canvasMiddle);
-      //for loop draws the graph
-
-      for (let i = 0; i < dataArray.length; i++) {
-        let value = dataArray[i];
-        value = 100 / value;
-        context.lineTo(x, canvasMiddle + value * flip * canvasMiddle);
-        x += barWidth;
-        context.lineTo(x, canvasMiddle + value * flip * canvasMiddle);
-        context.lineTo(x, canvasMiddle);
-        flip = flip * -1;
-      }
-
-      context.stroke();
-      requestAnimationFrame(canvasdraw);
-    };
-    canvasdraw();
+onMounted(() => {
+  audio.value.addEventListener("timeupdate", () => {
+    currentTime.value = audio.value.currentTime;
   });
+  document.body.addEventListener("mousemove", (e) => {
+    const x = (e.clientX - window.innerWidth / 2) / (window.innerWidth / 2);
+    const y = (e.clientY - window.innerHeight / 2) / (window.innerHeight / 2);
+    console.log(x, y);
+  });
+});
 </script>
 
 <template>
-  <div id="canvas"></div>
+  <PageTemplate>
+    <CenterDiv bottom="true">
+      <div class="center">
+        <div class="player-container rainbow-border">
+          <div class="visualiser-container">
+            <Visualizer :audioSource="audio"></Visualizer>
+          </div>
+          <div class="data-container">
+            <h1>{{ audioData.title }}</h1>
+            <p>{{ audioData.artist }}</p>
+          </div>
+          <div class="controls-container">
+            <div class="seekbar">
+              <p class="current-time">{{ secondsToTimeFormat(currentTime) }}</p>
+              <input
+                type="range"
+                :min="0"
+                :max="audio.duration"
+                v-model="currentTime"
+                @input="(e) => (audio.currentTime = e.target.value)"
+              />
+              <p class="total-time">
+                {{ secondsToTimeFormat(audio.duration) }}
+              </p>
+            </div>
+            <div class="transport">
+              <div class="previous" @click="previous()">
+                &lt;
+                <i class="fa-solid fa-backward-step"></i>
+              </div>
+              <div class="play" @click="togglePlay()">
+                PLAY<i class="fa-solid fa-play"></i>
+              </div>
+              <div class="next" @click="next()">
+                &gt;<i class="fa-solid fa-forward-step"></i>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </CenterDiv>
+  </PageTemplate>
 </template>
 
-<style>
-  canvas {
-    background-color: aliceblue;
-    width: 100%;
-    height: 200px;
-  }
+<style scoped>
+h1,
+p {
+  padding: 0;
+  margin: 0;
+}
+h1 {
+  font-size: x-large;
+}
+.data-container {
+  margin-top: var(--lengths-md-2);
+  margin-bottom: var(--lengths-md-2);
+}
+
+.transport,
+.seekbar {
+  display: flex;
+  justify-content: space-around;
+}
+
+.transport {
+  font-size: 2rem;
+}
+.center {
+  display: flex;
+  justify-content: center;
+}
+.player-container {
+  margin: var(--lengths-md-2);
+  filter: var(--common-shadow);
+  transform-style: preserve-3d;
+  transform: perspective(800px) rotateX(30deg) rotatey(10deg) rotateZ(5deg);
+  padding: var(--lengths-md-2);
+  border-radius: var(--lengths-md-2);
+  background-color: var(--monochrome-1);
+}
+.visualiser-container {
+  color: white;
+  background: var(--custom-gradient);
+  border-radius: var(--lengths-md-2);
+  width: 200px;
+  height: 100px;
+  padding: var(--lengths-md-2);
+}
 </style>

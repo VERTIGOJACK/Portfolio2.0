@@ -173,6 +173,12 @@ button:focus-visible {
   padding-bottom: var(--lengths-lg-1);
 }
 
+.rainbow-border{
+  box-shadow: 0 0 0 var(--lengths-sm-1) var(--accent-2),
+  0 0 0 calc(var(--lengths-sm-1) * 2) var(--accent-3),
+  0 0 0 calc(var(--lengths-sm-1) * 3) var(--accent-1);
+}
+
 @keyframes loadscroll {
   0% {
     background-position-x: 0px;
