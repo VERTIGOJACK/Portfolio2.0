@@ -113,7 +113,7 @@ onBeforeRouteLeave(() => {
           type="range"
           name="volume"
           id="volume"
-          value="50"
+          value="20"
           :min="0"
           :max="100"
           @input="(e) => (audio.volume = e.target.value / 100)"

@@ -32,6 +32,13 @@
 
     //create analyzer elements
     const audioContext = new window.AudioContext();
+    document.addEventListener(
+      "mousedown",
+      () => {
+        audioContext.resume();
+      },
+      { once: true }
+    );
     // init analyzers
     // props.audioSource.play();
     let audioSource = audioContext.createMediaElementSource(props.audioSource);
