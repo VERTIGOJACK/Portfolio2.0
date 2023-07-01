@@ -163,7 +163,7 @@ onBeforeRouteLeave(() => {
                 </div>
               </div>
               <div class="next" @click="next()">
-                <i class="fa-solid fa-forward-stsep"></i>
+                <i class="fa-solid fa-forward-step"></i>
               </div>
             </div>
           </div>
