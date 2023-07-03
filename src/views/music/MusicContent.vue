@@ -1,118 +1,132 @@
 <script setup>
-    import { ref, onMounted } from "vue";
-    import { onBeforeRouteLeave } from "vue-router";
+import { ref, onMounted } from "vue";
+import { onBeforeRouteLeave } from "vue-router";
 
-    import CenterDiv from "../../components/general/div/CenterDiv.vue";
-    import Visualizer from "../../components/visualizer/Visualizer.vue";
-    import { secondsToTimeFormat } from "../../components/helper/secondsToTimeformat.js";
-    const audio = ref(new Audio());
-    audio.value.crossOrigin = "http://localhost:5173";
-    const currentTime = ref(audio.value.currentTime);
-    const rotateVector = ref({ x: 0, y: 0 });
-    const playList = ref([
-      {
-        filePath: "/path",
-        songName: "B2B",
-        artistName: "VERTIGOJACK",
-        songYear: "2022",
-      },
-    ]);
-    const counter = ref(0);
+import CenterDiv from "../../components/general/div/CenterDiv.vue";
+import Visualizer from "../../components/visualizer/Visualizer.vue";
+import { secondsToTimeFormat } from "../../components/helper/secondsToTimeformat.js";
+const audio = ref(new Audio());
+audio.value.crossOrigin = "http://localhost:5173";
+const currentTime = ref(audio.value.currentTime);
+const rotateVector = ref({ x: 0, y: 0, test: "" });
+const playList = ref([
+  {
+    filePath: "/path",
+    songName: "B2B",
+    artistName: "VERTIGOJACK",
+    songYear: "2022",
+  },
+]);
+const counter = ref(0);
 
-    const getPlaylist = async () => {
-      const res = await fetch(
-        "https://content.vertigodigital.se/wp-json/wp/v2/songs"
-      );
-      const json = await res.json();
-      const cleanArray = await json.map(async (item) => {
-        const result = {
-          filePath: "",
-          songName: "",
-          artistName: "",
-          songYear: "",
-        };
-        const fileRes = await fetch(
-          "https://content.vertigodigital.se/wp-json/wp/v2/media/" +
-            item.acf.song_file
-        );
-        const fileJson = await fileRes.json();
-
-        result.filePath = fileJson.source_url;
-
-        result.songName = item.acf.song_title;
-        result.artistName = item.acf.artist_name;
-        result.songYear = item.acf.year;
-        return result;
-      });
-
-      playList.value = await Promise.all(cleanArray);
-      console.log(playList.value);
+const getPlaylist = async () => {
+  const res = await fetch(
+    "https://content.vertigodigital.se/wp-json/wp/v2/songs"
+  );
+  const json = await res.json();
+  const cleanArray = await json.map(async (item) => {
+    const result = {
+      filePath: "",
+      songName: "",
+      artistName: "",
+      songYear: "",
     };
+    const fileRes = await fetch(
+      "https://content.vertigodigital.se/wp-json/wp/v2/media/" +
+        item.acf.song_file
+    );
+    const fileJson = await fileRes.json();
 
-    //run data fn, set initilal value to first in list
-    await getPlaylist();
-    audio.value.src = playList.value[0].filePath;
+    result.filePath = fileJson.source_url;
 
-    const togglePlay = () => {
-      if (audio.value.paused) {
-        audio.value.play();
-      } else {
-        audio.value.pause();
-      }
-    };
+    result.songName = item.acf.song_title;
+    result.artistName = item.acf.artist_name;
+    result.songYear = item.acf.year;
+    return result;
+  });
 
-    const next = () => {
-      counter.value + 1 < playList.value.length
-        ? counter.value++
-        : (counter.value = 0);
-      audio.value.src = playList.value[counter.value].filePath;
-      audio.value.play();
-    };
-    const previous = () => {
-      counter.value > 0
-        ? counter.value--
-        : (counter.value = playList.value.length - 1);
-      audio.value.src = playList.value[counter.value].filePath;
-      audio.value.play();
-    };
+  playList.value = await Promise.all(cleanArray);
+  console.log(playList.value);
+};
 
-    const rotatePlayerSetup = (e) =>{
-      const playerElement = document.getElementById("player");
-      const spaceElement = document.getElementById("space");
-    //first check if gyro is available
+//run data fn, set initilal value to first in list
+// await getPlaylist();
+// audio.value.src = playList.value[0].filePath;
 
+const togglePlay = () => {
+  if (audio.value.paused) {
+    audio.value.play();
+  } else {
+    audio.value.pause();
+  }
+};
+
+const next = () => {
+  counter.value + 1 < playList.value.length
+    ? counter.value++
+    : (counter.value = 0);
+  audio.value.src = playList.value[counter.value].filePath;
+  audio.value.play();
+};
+const previous = () => {
+  counter.value > 0
+    ? counter.value--
+    : (counter.value = playList.value.length - 1);
+  audio.value.src = playList.value[counter.value].filePath;
+  audio.value.play();
+};
+
+const limitValue = (value, maxvalue, minvalue) => {
+  if (value > maxvalue) {
+    return maxvalue;
+  } else if (value < minvalue) {
+    return minvalue;
+  } else {
+    return value;
+  }
+};
+
+const rotatePlayerSetup = (e) => {
+  const playerElement = document.getElementById("player");
+  const spaceElement = document.getElementById("space");
+  //first check if gyro is available
+  if (window.DeviceOrientationEvent.gamma) {
+    console.log("gyro detect");
+    // if available use gyro for rotation
+    window.addEventListener("deviceorientation", (e) => {
+      rotateVector.value.x = limitValue(e.gamma, 90, -40) / 130;
+      rotateVector.value.y = limitValue(e.beta, 30, -30) / 60;
+
+      playerElement.style.transform = `perspective(800px) rotateY(${
+        rotateVector.value.x * 50 * -1
+      }deg) rotateX(${rotateVector.value.y * 50 * -1}deg)`;
+    });
+  } else {
     //if gyro not available use mousePos for rotation
-    else{
-    spaceElement.addEventListener("mousemove",()=>{
+    spaceElement.addEventListener("mousemove", (e) => {
       rotateVector.value.x =
-      (e.pageX - spaceElement.offsetWidth / 2) / (spaceElement.offsetWidth / 2);
-    rotateVector.value.y =
-      (e.pageY - spaceElement.offsetHeight / 2) /
-      (spaceElement.offsetHeight / 2);
-    playerElement.style.transform = `perspective(800px) rotateY(${
-      rotateVector.value.x * 20
-    }deg) rotateX(${rotateVector.value.y * 20 * -1}deg)`;
+        (e.pageX - spaceElement.offsetWidth / 2) /
+        (spaceElement.offsetWidth / 2);
+      rotateVector.value.y =
+        (e.pageY - spaceElement.offsetHeight / 2) /
+        (spaceElement.offsetHeight / 2);
+      playerElement.style.transform = `perspective(800px) rotateY(${
+        rotateVector.value.x * 20
+      }deg) rotateX(${rotateVector.value.y * 20 * -1}deg)`;
     });
   }
-    // else use gyro for rotation
+};
+onMounted(async () => {
+  audio.value.addEventListener("timeupdate", () => {
+    currentTime.value = audio.value.currentTime;
+  });
 
+  rotatePlayerSetup();
 
-
-
-    }
-
-    onMounted(async () => {
-
-
-      audio.value.addEventListener("timeupdate", () => {
-        currentTime.value = audio.value.currentTime;
-      });
-
-
-
-    onBeforeRouteLeave(() => {
-      audio.value.pause();
-    });
+  onBeforeRouteLeave(() => {
+    audio.value.pause();
+  });
+});
 </script>
 
 <template>
@@ -130,7 +144,8 @@
           value="20"
           :min="0"
           :max="100"
-          @input="(e) => (audio.volume = e.target.value / 100)" />
+          @input="(e) => (audio.volume = e.target.value / 100)"
+        />
         <div class="volume-down">
           <i class="fa-solid fa-volume-down"></i>
         </div>
@@ -157,7 +172,8 @@
                 v-model="currentTime"
                 @input="(e) => (audio.currentTime = e.target.value)"
                 @mousedown="audio.pause()"
-                @mouseup="audio.play()" />
+                @mouseup="audio.play()"
+              />
               <p class="total-time">
                 {{ secondsToTimeFormat(audio.duration) }}
               </p>
@@ -182,84 +198,87 @@
         </div>
       </div>
     </div>
+    <p>{{ rotateVector.x }}</p>
+    <p>{{ rotateVector.y }}</p>
+    <p>{{ rotateVector.test }}</p>
   </CenterDiv>
 </template>
 
 <style scoped>
-  .year {
-    position: absolute;
-    right: calc(0px + var(--lengths-md-3));
-    filter: var(--common-shadow);
-  }
+.year {
+  position: absolute;
+  right: calc(0px + var(--lengths-md-3));
+  filter: var(--common-shadow);
+}
 
-  .volume-up,
-  .volume-down {
-    font-size: large;
-    font-weight: bold;
-  }
-  .outer {
-    display: flex;
-  }
+.volume-up,
+.volume-down {
+  font-size: large;
+  font-weight: bold;
+}
+.outer {
+  display: flex;
+}
 
-  .volume-container {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-around;
-    align-items: center;
-    margin: var(--lengths-md-2);
-    background-color: var(--monochrome-1);
-    width: var(--lengths-md-3);
-    border-radius: var(--lengths-md-2);
-    filter: var(--common-shadow);
-    margin-top: var(--lengths-md-3);
-    margin-bottom: var(--lengths-md-3);
-  }
+.volume-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+  margin: var(--lengths-md-2);
+  background-color: var(--monochrome-1);
+  width: var(--lengths-md-3);
+  border-radius: var(--lengths-md-2);
+  filter: var(--common-shadow);
+  margin-top: var(--lengths-md-3);
+  margin-bottom: var(--lengths-md-3);
+}
 
-  #volume {
-    rotate: -90deg;
-  }
+#volume {
+  rotate: -90deg;
+}
 
-  h1,
-  p {
-    padding: 0;
-    margin: 0;
-  }
-  h1 {
-    font-size: x-large;
-  }
-  .data-container {
-    margin-top: var(--lengths-md-2);
-    margin-bottom: var(--lengths-md-2);
-  }
+h1,
+p {
+  padding: 0;
+  margin: 0;
+}
+h1 {
+  font-size: x-large;
+}
+.data-container {
+  margin-top: var(--lengths-md-2);
+  margin-bottom: var(--lengths-md-2);
+}
 
-  .transport,
-  .seekbar {
-    display: flex;
-    justify-content: space-around;
-  }
+.transport,
+.seekbar {
+  display: flex;
+  justify-content: space-around;
+}
 
-  .transport {
-    font-size: 2rem;
-  }
-  .center {
-    display: flex;
-    justify-content: center;
-    width: 100%;
-  }
-  .player-container {
-    margin: var(--lengths-md-2);
-    filter: var(--common-shadow);
-    transform-style: preserve-3d;
-    padding: var(--lengths-md-2);
-    border-radius: var(--lengths-md-2);
-    background-color: var(--monochrome-1);
-  }
-  .visualiser-container {
-    color: white;
-    background: var(--custom-gradient);
-    border-radius: var(--lengths-md-2);
-    width: 200px;
-    height: 100px;
-    padding: var(--lengths-md-2);
-  }
+.transport {
+  font-size: 2rem;
+}
+.center {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+.player-container {
+  margin: var(--lengths-md-2);
+  filter: var(--common-shadow);
+  transform-style: preserve-3d;
+  padding: var(--lengths-md-2);
+  border-radius: var(--lengths-md-2);
+  background-color: var(--monochrome-1);
+}
+.visualiser-container {
+  color: white;
+  background: var(--custom-gradient);
+  border-radius: var(--lengths-md-2);
+  width: 200px;
+  height: 100px;
+  padding: var(--lengths-md-2);
+}
 </style>
