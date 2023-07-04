@@ -64,6 +64,8 @@
   -webkit-text-size-adjust: 100%;
 }
 
+*{box-sizing: border-box;}
+
 p {
   font-family: var(--font5);
 }

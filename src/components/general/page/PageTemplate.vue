@@ -3,7 +3,7 @@
   import SocialStack from "../../social/SocialStack.vue";
   import CenterDiv from "../div/CenterDiv.vue";
   import SwirlDiv from "../div/SwirlDiv.vue";
-  import Loading from "./Loading.vue";
+  import LoadingAlt from "./LoadingAlt.vue";
 </script>
 
 <template>
@@ -25,7 +25,7 @@
       <div class="pagecontainer">
         <div class="pagerestrict">
           <Navbar class="sticky" />
-          <Loading></Loading>
+          <LoadingAlt></LoadingAlt>
         </div>
       </div>
     </template>

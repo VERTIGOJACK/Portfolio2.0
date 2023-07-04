@@ -5,241 +5,27 @@
   import CenterDiv from "../components/general/div/CenterDiv.vue";
   import Visualizer from "../components/visualizer/Visualizer.vue";
   import { secondsToTimeFormat } from "../components/helper/secondsToTimeformat.js";
-  const audio = ref(new Audio());
-  const currentTime = ref(audio.value.currentTime);
-  const rotateVector = ref({ x: 0, y: 0 });
-  const playList = ref([
-    {
-      filePath: "",
-      songName: "",
-      artistName: "",
-      songYear: "",
-    },
-  ]);
-  const counter = ref(0);
-
-  const getPlaylist = async () => {
-    const res = await fetch(
-      "https://content.vertigodigital.se/wp-json/wp/v2/songs"
-    );
-    const json = await res.json();
-    const cleanArray = await json.map(async (item) => {
-      const result = {
-        filePath: "",
-        songName: "",
-        artistName: "",
-        songYear: "",
-      };
-      const fileRes = await fetch(
-        "https://content.vertigodigital.se/wp-json/wp/v2/media/" +
-          item.acf.song_file
-      );
-      const fileJson = await fileRes.json();
-
-      result.filePath = fileJson.source_url;
-
-      result.songName = item.acf.song_title;
-      result.artistName = item.acf.artist_name;
-      result.songYear = item.acf.year;
-      return result;
-    });
-    console.log(cleanArray);
-    playList.value = cleanArray;
-  };
-
-  await getPlaylist();
-
-  // audio.value.src = playList.value[counter.value];
-
-  const togglePlay = () => {
-    if (audio.value.paused) {
-      audio.value.play();
-    } else {
-      audio.value.pause();
-    }
-  };
-
-  const next = () => {
-    counter.value + 1 < playList.value.length
-      ? counter.value++
-      : (counter.value = 0);
-    audio.value.src = playList.value[counter.value].filePath;
-    audio.value.play();
-  };
-  const previous = () => {
-    counter.value > 0
-      ? counter.value--
-      : (counter.value = playList.value.length - 1);
-    audio.value.src = playList.value[counter.value].filePath;
-    audio.value.play();
-  };
-
-  onMounted(async () => {
-    const playerElement = document.getElementById("player");
-    const spaceElement = document.getElementById("space");
-
-    audio.value.addEventListener("timeupdate", () => {
-      currentTime.value = audio.value.currentTime;
-    });
-
-    spaceElement.addEventListener("mousemove", (e) => {
-      rotateVector.value.x =
-        (e.pageX - spaceElement.offsetWidth / 2) /
-        (spaceElement.offsetWidth / 2);
-      rotateVector.value.y =
-        (e.pageY - spaceElement.offsetHeight / 2) /
-        (spaceElement.offsetHeight / 2);
-      playerElement.style.transform = `perspective(800px) rotateY(${
-        rotateVector.value.x * 20
-      }deg) rotateX(${rotateVector.value.y * 20 * -1}deg)`;
-    });
-  });
-
-  onBeforeRouteLeave(() => {
-    audio.value.pause();
-  });
+  import Spinner from "../components/spinner/Spinner.vue";
 </script>
 
 <template>
   <PageTemplate>
-    <CenterDiv id="space" bottom="true">
-      <div class="outer">
-        <div class="volume-container">
-          <div class="volume-up">
-            <i class="fa-solid fa-volume-up"></i>
-          </div>
-
-          <input
-            type="range"
-            name="volume"
-            id="volume"
-            value="50"
-            :min="0"
-            :max="100"
-            @input="(e) => (audio.volume = e.target.value / 100)" />
-          <div class="volume-down">
-            <i class="fa-solid fa-volume-down"></i>
-          </div>
-        </div>
-        <div class="center">
-          <div id="player" class="player-container rainbow-border">
-            <div class="visualiser-container">
-              <Visualizer :audioSource="audio"></Visualizer>
-            </div>
-            <div class="data-container">
-              <h1>{{ playList[counter].songName }}</h1>
-              <p>{{ playList[counter].artistName }}</p>
-            </div>
-            <div class="controls-container">
-              <div class="seekbar">
-                <p class="current-time">
-                  {{ secondsToTimeFormat(currentTime) }}
-                </p>
-                <input
-                  type="range"
-                  :min="0"
-                  :max="audio.duration"
-                  v-model="currentTime"
-                  @input="(e) => (audio.currentTime = e.target.value)"
-                  @mousedown="audio.pause()"
-                  @mouseup="audio.play()" />
-                <p class="total-time">
-                  {{ secondsToTimeFormat(audio.duration) }}
-                </p>
-              </div>
-              <div class="transport">
-                <div class="previous" @click="previous()">
-                  <i class="fa-solid fa-backward-step"></i>
-                </div>
-                <div class="play" @click="togglePlay()">
-                  <div v-show="audio.paused">
-                    <i class="fa-solid fa-play"></i>
-                  </div>
-                  <div v-show="!audio.paused">
-                    <i class="fa-solid fa-pause"></i>
-                  </div>
-                </div>
-                <div class="next" @click="next()">
-                  <i class="fa-solid fa-forward-step"></i>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
+    <CenterDiv bottom="true">
+      <div class="center">
+        <Spinner class="width"></Spinner>
       </div>
     </CenterDiv>
   </PageTemplate>
 </template>
 
 <style scoped>
-  .volume-up,
-  .volume-down {
-    font-size: large;
-    font-weight: bold;
-  }
-  .outer {
-    display: flex;
-  }
-
-  .volume-container {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-around;
-    align-items: center;
-    margin: var(--lengths-md-2);
-    background-color: var(--monochrome-1);
-    width: var(--lengths-md-3);
-    border-radius: var(--lengths-md-2);
-    filter: var(--common-shadow);
-    margin-top: var(--lengths-md-3);
-    margin-bottom: var(--lengths-md-3);
-  }
-
-  #volume {
-    rotate: -90deg;
-  }
-
-  h1,
-  p {
-    padding: 0;
-    margin: 0;
-  }
-  h1 {
-    font-size: x-large;
-  }
-  .data-container {
-    margin-top: var(--lengths-md-2);
-    margin-bottom: var(--lengths-md-2);
-  }
-
-  .transport,
-  .seekbar {
-    display: flex;
-    justify-content: space-around;
-  }
-
-  .transport {
-    font-size: 2rem;
-  }
   .center {
+    width: 100%;
     display: flex;
     justify-content: center;
-    width: 100%;
+    align-content: center;
   }
-  .player-container {
-    margin: var(--lengths-md-2);
-    filter: var(--common-shadow);
-    transform-style: preserve-3d;
-    padding: var(--lengths-md-2);
-    border-radius: var(--lengths-md-2);
-    background-color: var(--monochrome-1);
-  }
-  .visualiser-container {
-    color: white;
-    background: var(--custom-gradient);
-    border-radius: var(--lengths-md-2);
-    width: 200px;
-    height: 100px;
-    padding: var(--lengths-md-2);
+  .width {
+    width: 25%;
   }
 </style>

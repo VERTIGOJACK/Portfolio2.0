@@ -6,18 +6,48 @@ const getMediaById = async (id) => {
   if (id != "") {
     return {
       url: json.media_details.sizes.medium.source_url,
-      title: json.title.rendered,
-      text: json.caption.rendered.replace(/(<([^>]+)>)/gi, ""),
     };
   } else {
     return "";
   }
 };
 
-export const getData = async () => {
+export const getDataList = async () => {
   //fetch and await softwares json
   const response = await fetch(
-    "https://content.vertigodigital.se/wp-json/wp/v2/software"
+    "https://content.vertigodigital.se/wp-json/wp/v2/software/"
+  );
+  const json = await response.json();
+  //get only acf
+  //then map to our format
+  const software = Promise.all(
+    json.map(async (item) => {
+      const image = async () => {
+        const imgres = await fetch(
+          "https://content.vertigodigital.se/wp-json/wp/v2/media/" +
+            item.featured_media
+        );
+        const imgjson = await imgres.json();
+        console.log(imgjson.source_url);
+        return imgjson.source_url;
+      };
+
+      return {
+        title: item.acf.title,
+        platforms: item.acf.platforms,
+        id: item.id,
+        image: await image(),
+      };
+    })
+  );
+
+  return software;
+};
+
+export const getDataSingle = async (id) => {
+  //fetch and await softwares json
+  const response = await fetch(
+    "https://content.vertigodigital.se/wp-json/wp/v2/software/" + id
   );
   const json = await response.json();
   //get only acf
@@ -25,10 +55,10 @@ export const getData = async () => {
     return item.acf;
   });
   //then map to our format
-  const softwares = Promise.all(
+  const software = Promise.all(
     map.map(async (item) => {
       return {
-        sectionTitle: item.title,
+        Title: item.title,
         sectionText: item.description,
         carouselList: [
           await getMediaById(item.imageA),

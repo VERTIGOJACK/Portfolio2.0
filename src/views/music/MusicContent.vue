@@ -86,34 +86,61 @@
     }
   };
 
-  const rotatePlayerSetup = (e) => {
+  const rotatePlayerSetup = () => {
     const playerElement = document.getElementById("player");
     const spaceElement = document.getElementById("space");
+    let gyro = false;
     //first check if gyro is available
-    if (window.DeviceOrientationEvent) {
-      // if available use gyro for rotation
-      window.addEventListener("deviceorientation", (e) => {
-        rotateVector.value.x = limitValue(e.gamma, 30, -30) / 60;
-        rotateVector.value.y = limitValue(e.beta, 90, -40) / 130;
+    const mouseRotate = (e) => {
+      rotateVector.value.x =
+        (e.pageX - spaceElement.offsetWidth / 2) /
+        (spaceElement.offsetWidth / 2);
+      rotateVector.value.y =
+        (e.pageY - spaceElement.offsetHeight / 2) /
+        (spaceElement.offsetHeight / 2);
 
-        playerElement.style.transform = `perspective(800px) rotateY(${
-          rotateVector.value.x * 30 * -1
-        }deg) rotateX(${rotateVector.value.y * 30 * -1}deg)`;
-      });
-    } else {
-      //if gyro not available use mousePos for rotation
-      spaceElement.addEventListener("mousemove", (e) => {
-        rotateVector.value.x =
-          (e.pageX - spaceElement.offsetWidth / 2) /
-          (spaceElement.offsetWidth / 2);
-        rotateVector.value.y =
-          (e.pageY - spaceElement.offsetHeight / 2) /
-          (spaceElement.offsetHeight / 2);
-        playerElement.style.transform = `perspective(800px) rotateY(${
-          rotateVector.value.x * 20
-        }deg) rotateX(${rotateVector.value.y * 20 * -1}deg)`;
-      });
-    }
+      playerElement.style.transform = `perspective(800px) rotateY(${
+        rotateVector.value.x * 20
+      }deg) rotateX(${rotateVector.value.y * 20 * -1}deg)`;
+    };
+
+    const gyroRotate = (e) => {
+      rotateVector.value.x = limitValue(e.gamma, 30, -30) / 60;
+      rotateVector.value.y = limitValue(e.beta, 90, -40) / 130;
+
+      playerElement.style.transform = `perspective(800px) rotateY(${
+        rotateVector.value.x * 30 * -1
+      }deg) rotateX(0deg)`;
+    };
+
+    spaceElement.addEventListener("mousemove", mouseRotate);
+
+    window.addEventListener(
+      "deviceorientation",
+      (e) => {
+        if (e.alpha || e.gamma || e.beta) {
+          spaceElement.removeEventListener("mousemove", mouseRotate);
+          console.log("removed");
+          window.addEventListener("deviceorientation", gyroRotate);
+        }
+      },
+      { once: true }
+    );
+
+    // // if available use gyro for rotation
+    // if (gyro) {
+    //   console.log("motion detected");
+    //   window.addEventListener("deviceorientation", (e) => {
+    //     rotateVector.value.x = limitValue(e.gamma, 30, -30) / 60;
+    //     rotateVector.value.y = limitValue(e.beta, 90, -40) / 130;
+
+    //     playerElement.style.transform = `rotateY(${
+    //       rotateVector.value.x * 30 * -1
+    //     }deg) rotateX(${rotateVector.value.y * 30 * -1}deg)`;
+    //   });
+    // } else {
+    //   //if gyro not available use mousePos for rotation
+    // }
   };
   onMounted(async () => {
     audio.value.addEventListener("timeupdate", () => {
@@ -150,45 +177,49 @@
       </div>
       <div class="center">
         <div id="player" class="player-container rainbow-border">
-          <div class="visualiser-container">
-            <h1 class="year">{{ playList[counter].songYear }}</h1>
-            <Visualizer :audioSource="audio"> </Visualizer>
-          </div>
-          <div class="data-container">
-            <h1>{{ playList[counter].songName }}</h1>
-            <p>{{ playList[counter].artistName }}</p>
-          </div>
-          <div class="controls-container">
-            <div class="seekbar">
-              <p class="current-time">
-                {{ secondsToTimeFormat(currentTime) }}
-              </p>
-              <input
-                type="range"
-                :min="0"
-                :max="audio.duration"
-                v-model="currentTime"
-                @input="(e) => (audio.currentTime = e.target.value)"
-                @mousedown="audio.pause()"
-                @mouseup="audio.play()" />
-              <p class="total-time">
-                {{ secondsToTimeFormat(audio.duration) }}
-              </p>
+          <div class="player-inner">
+            <div class="visualiser-container">
+              <h1 class="year">
+                {{ playList[counter].songYear }}
+              </h1>
+              <Visualizer :audioSource="audio"> </Visualizer>
             </div>
-            <div class="transport">
-              <div class="previous" @click="previous()">
-                <i class="fa-solid fa-backward-step"></i>
+            <div class="data-container">
+              <h1>{{ playList[counter].songName }}</h1>
+              <p>{{ playList[counter].artistName }}</p>
+            </div>
+            <div class="controls-container">
+              <div class="seekbar">
+                <p class="current-time">
+                  {{ secondsToTimeFormat(currentTime) }}
+                </p>
+                <input
+                  type="range"
+                  :min="0"
+                  :max="audio.duration"
+                  v-model="currentTime"
+                  @input="(e) => (audio.currentTime = e.target.value)"
+                  @mousedown="audio.pause()"
+                  @mouseup="audio.play()" />
+                <p class="total-time">
+                  {{ secondsToTimeFormat(audio.duration) }}
+                </p>
               </div>
-              <div class="play" @click="togglePlay()">
-                <div v-show="audio.paused">
-                  <i class="fa-solid fa-play"></i>
+              <div class="transport">
+                <div class="previous" @click="previous()">
+                  <i class="fa-solid fa-backward-step"></i>
                 </div>
-                <div v-show="!audio.paused">
-                  <i class="fa-solid fa-pause"></i>
+                <div class="play" @click="togglePlay()">
+                  <div v-show="audio.paused">
+                    <i class="fa-solid fa-play"></i>
+                  </div>
+                  <div v-show="!audio.paused">
+                    <i class="fa-solid fa-pause"></i>
+                  </div>
                 </div>
-              </div>
-              <div class="next" @click="next()">
-                <i class="fa-solid fa-forward-step"></i>
+                <div class="next" @click="next()">
+                  <i class="fa-solid fa-forward-step"></i>
+                </div>
               </div>
             </div>
           </div>
@@ -197,10 +228,37 @@
     </div>
     <!-- <p>{{ rotateVector.x }}</p>
     <p>{{ rotateVector.y }}</p> -->
+    <div class="hero-background"></div>
   </CenterDiv>
 </template>
 
 <style scoped>
+  #space {
+    position: relative;
+    overflow: hidden;
+    height: fit-content;
+  }
+  .hero-background {
+    z-index: -1;
+    width: 100%;
+    height: 100%;
+    left: -50%;
+    top: -75%;
+    transform: translate(50%, 50%) scale(2);
+    transform-origin: center;
+    position: absolute;
+    background: var(--custom-gradient);
+    animation: rotate linear forwards 5s infinite;
+  }
+
+  @keyframes rotate {
+    0% {
+      transform: translate(50%, 50%) scale(2) rotateZ(0deg);
+    }
+    100% {
+      transform: translate(50%, 50%) scale(2) rotateZ(360deg);
+    }
+  }
   .year {
     position: absolute;
     right: calc(0px + var(--lengths-md-3));
@@ -213,7 +271,10 @@
     font-weight: bold;
   }
   .outer {
+    padding-top: var(--lengths-md-3);
+    padding-bottom: var(--lengths-md-3);
     display: flex;
+    width: 100%;
   }
 
   .volume-container {
@@ -273,8 +334,8 @@
     color: white;
     background: var(--custom-gradient);
     border-radius: var(--lengths-md-2);
-    width: 200px;
-    height: 100px;
+    width: 100%;
+    height: 100%;
     padding: var(--lengths-md-2);
   }
 </style>

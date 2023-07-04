@@ -14,8 +14,19 @@ const routes = [
   },
   {
     path: "/software",
-    name: "software",
-    component: () => import("../views/Software.vue"),
+    name: "",
+    component: () => import("../views/software/SoftwareHome.vue"),
+    children: [
+      {
+        path: "",
+        component: () => import("../views/software/SoftwareList.vue"),
+      },
+      {
+        path: "item/:id",
+        component: () =>
+          import("../views/software/softwareitem/SoftwareItem.vue"),
+      },
+    ],
   },
   {
     path: "/graphics",
