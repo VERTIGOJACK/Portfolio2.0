@@ -19,15 +19,5 @@
 </template>
 
 <style scoped>
-  .item {
-    border-style: solid;
-    border-width: 0px 0px 8px 0px;
-    border-color: var(--accent-1);
-    padding-bottom: 32px;
-  }
-  .info {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
+
 </style>

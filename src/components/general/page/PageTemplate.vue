@@ -16,7 +16,7 @@
             <slot></slot>
           </SwirlDiv>
           <CenterDiv class="social">
-            <SocialStack></SocialStack>
+            <!-- <SocialStack></SocialStack> -->
           </CenterDiv>
         </div>
       </div>

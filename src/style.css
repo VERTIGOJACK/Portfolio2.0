@@ -64,7 +64,9 @@
   -webkit-text-size-adjust: 100%;
 }
 
-*{box-sizing: border-box;}
+* {
+  box-sizing: border-box;
+}
 
 p {
   font-family: var(--font5);
@@ -117,13 +119,18 @@ button:focus-visible {
   border-radius: 3px;
   padding: 4px;
   transition: all 0.2s ease-in-out;
+  color: var(--monochrome-1);
 }
 
 .call-to-action:hover {
   background-color: var(--accent-3);
-  color: var(--monochrome-1);
   filter: var(--common-shadow);
   transform: scale(1.05);
+}
+
+.call-to-action:hover * {
+  color: var(--monochrome-1);
+  mix-blend-mode: difference;
 }
 
 .pagecontainer {
