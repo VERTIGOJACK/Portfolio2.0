@@ -1,9 +1,11 @@
 <script setup>
-  import Carousel from "../../../components/carousel/Carousel.vue";
-  import { getDataList } from "../functions";
-  import { ref, onMounted } from "vue";
+import Carousel from "../../../components/carousel/Carousel.vue";
+import { getDataSingle } from "../functions";
+import { ref, onMounted } from "vue";
 
-  const classArray = ["blue", "red", "yellow"];
+const props = defineProps({ softwareid: "" });
+
+const classArray = ["blue", "red", "yellow"];
 
   let counter = 0;
 
@@ -48,28 +50,25 @@
     e.target.classList.toggle("rainbow-border");
   };
 
-  // const apiData = await Promise.all(()=>{
-  //   const res = fetch();
-
-  // });
-
-  // const mydata = await getData();
-  // softwareContent.value.items = mydata.reverse();
+const mydata = await getDataSingle(props.softwareid);
+content.value = mydata;
+console.log(content.value);
 </script>
 
 <template>
   <div class="item">
     <div class="title">
-      <img :src="content.featuredImage" alt="" />
-      <h1>{{ content.sectionTitle }}</h1>
+      <img :src="content.featuredImage.url" alt="" />
+      <h1>{{ content.title }}</h1>
     </div>
-    <p>{{ content.sectionText }}</p>
+    <p>{{ content.description }}</p>
     <div class="technologies">
       <p
         v-for="item in content.technologies"
         class="technology"
-        :class="CountClass()">
-        {{ item }}
+        :class="CountClass()"
+      >
+        {{ item.name }}
       </p>
     </div>
     <div v-if="content.carouselList != ''">
